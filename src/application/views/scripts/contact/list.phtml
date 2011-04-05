@@ -1,0 +1,22 @@
+<?php
+  // Stocke le titre de l'entête dans une variable de layout
+  $this->broker('layout')->getLayout()->assign('header', 'Contacts');
+  // Stocke la configuration des boutons du menu de pied de page
+  $options = array();
+  $options[] = array(
+    'action' => 'Créer',
+    'icon'   => 'plus',
+    'url'    => '/contact/create'
+  );
+  $this->broker('layout')->getLayout()->assign('footer', $options);
+?>
+<!-- Affiche la liste des contacts -->
+<ul data-role="listview">
+<?php foreach ($this->contacts as $contact): ?>
+  <li>
+    <a href="/contact/view/id/<?php echo $contact->getId(); ?>">
+      <?php echo $contact->getFirstname() . ' ' . $contact->getLastname(); ?>
+    </a>
+  </li>
+<?php endforeach ?>
+</ul>

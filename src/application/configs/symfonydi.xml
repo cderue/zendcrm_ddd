@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony-project.org/2.0/container">
+  <parameters>
+    <parameter key="mongo.host">localhost</parameter>
+    <parameter key="mongo.port"></parameter>
+    <parameter key="mongo.username"></parameter>
+    <parameter key="mongo.password"></parameter>
+    <parameter key="mongo.dbname">zendcrm</parameter>
+    <parameter key="mongo.charset"></parameter>
+  </parameters>
+  <services>
+  	<service id="" class="\MongoEntity\Repository\UserRepository" shared="false">
+      <argument type="collection">
+        <argument key="auth">login</argument>
+        <argument key="username">%mailer.username%</argument>
+        <argument key="password">%mailer.password%</argument>
+        <argument key="ssl">ssl</argument>
+        <argument key="port">465</argument>
+      </argument>
+    </service>
+    <service id="" class="\Application\Repository\UserRepository" shared="false">
+      <argument type="collection">
+        <argument key="auth">login</argument>
+        <argument key="username">%mailer.username%</argument>
+        <argument key="password">%mailer.password%</argument>
+        <argument key="ssl">ssl</argument>
+        <argument key="port">465</argument>
+      </argument>
+    </service>
+    <service id="" class="\Application\Repository\ContactRepository" shared="false">
+      <argument type="collection">
+        <argument key="auth">login</argument>
+        <argument key="username">%mailer.username%</argument>
+        <argument key="password">%mailer.password%</argument>
+        <argument key="ssl">ssl</argument>
+        <argument key="port">465</argument>
+      </argument>
+    </service>
+    <service id="" class="\Application\Repository\LeadRepository" shared="false">
+      <argument type="collection">
+        <argument key="auth">login</argument>
+        <argument key="username">%mailer.username%</argument>
+        <argument key="password">%mailer.password%</argument>
+        <argument key="ssl">ssl</argument>
+        <argument key="port">465</argument>
+      </argument>
+    </service>
+    <service id="" class="\Application\Repository\AccountRepository" shared="false">
+      <argument type="collection">
+        <argument key="auth">login</argument>
+        <argument key="username">%mailer.username%</argument>
+        <argument key="password">%mailer.password%</argument>
+        <argument key="ssl">ssl</argument>
+        <argument key="port">465</argument>
+      </argument>
+    </service>
+    <service id="" class="\Application\Repository\OpportunityRepository" shared="false">
+      <argument type="collection">
+        <argument key="auth">login</argument>
+        <argument key="username">%mailer.username%</argument>
+        <argument key="password">%mailer.password%</argument>
+        <argument key="ssl">ssl</argument>
+        <argument key="port">465</argument>
+      </argument>
+    </service>
+    <service id="mailer" class="%mailer.class%">
+      <call method="setDefaultTransport">
+        <argument type="service" id="mail.transport" />
+      </call>
+    </service>
+  </services>
+</container>

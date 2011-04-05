@@ -1,0 +1,103 @@
+﻿<?php
+/** 
+ * Copyright (c) 2011, Cédric DERUE
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the University of California, Berkeley nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Définit la balise <meta name="charset"> -->
+    <?php echo $this->broker('HeadMeta')->appendName("charset", "utf-8"); ?>
+    <!-- Définit la balise <title> -->
+    <?php echo $this->broker('HeadTitle')->direct("Zend CRM Mobile"); ?>
+    <!-- jQuery Mobile CSS -->
+    <?php echo $this->broker('HeadLink')->appendStylesheet("/css/jquery.mobile-1.0a3.min.css"); ?>
+    <!-- ZendCRM Mobile CSS -->
+    <?php echo $this->broker('HeadLink')->appendStylesheet("/css/zendcrm.css"); ?>
+    <!-- jQuery Mobile JavaScript -->
+    <?php echo $this->broker('HeadScript')->appendFile("/javascripts/jquery-1.5.min.js"); ?>
+    <?php echo $this->broker('HeadScript')->appendFile("/javascripts/jquery.mobile-1.0a3.min.js"); ?>
+    
+  </head>
+  <body>
+    <div data-role="page"> 
+      <!-- Affiche l'entête -->
+      <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><?php echo $this->broker('layout')->getLayout()->header; ?></h1>
+        <a href="/user/logout" class="ui-btn-right" data-icon="delete">Quitter</a>
+        <div data-role="navbar">
+          <ul>
+            <li><a href="/lead/list" id="lead">Prospects</a></li>
+            <li><a href="/contact/list" id="contact">Contacts</a></li>
+            <li><a href="/account/list" id="account">Comptes clients</a></li>
+            <li><a href="/opportunity/list" id="opportunity">Opportunités</a></li>
+            <li><a href="#" id="more">...</a></li>
+          </ul>
+        </div>
+        <div id="subnavbar" data-role="navbar" style="display:none;">
+        	<ul>
+        		<li><a href="/meeting/list" id="meeting">Rendez-vous</a></li>
+        		<li><a href="/user/list" id="user">Utilisateurs</a></li>
+        	</ul>
+        </div>
+      </div>
+
+     
+      <div data-role="content">
+        <?php echo $this->broker('layout')->getLayout()->content; ?>
+      </div>
+      <!-- Affiche le pied de page -->
+      
+       
+      <?php  
+      $options = $this->broker('layout')->getLayout()->footer;
+      echo $this->broker('partial')->direct('partial/_footer.phtml', array('options' => $options)); 
+      ?>
+     
+       
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $.mobile.ajaxEnabled = false;
+        
+        $('input[data-type]').each(function() {
+          var id = $(this).attr("id");
+          var type = $(this).attr("data-type");
+          var el = $(this).clone();
+          el.attr("type", type);
+          el.attr("id", "new_" + id);
+          el.insertBefore($(this));
+          $(this).remove();
+          el.attr("id", id);
+        });
+        
+        $('#more').bind('click', function() {
+        	$('#subnavbar').show();
+        });
+      });
+  </script>
+  </body>
+</html>
