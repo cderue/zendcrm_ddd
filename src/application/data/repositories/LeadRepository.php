@@ -60,16 +60,16 @@ class LeadRepository implements Repository\ILeadRepository
 	{
 		$query = new Mongo\QueryObject($this->_context);
 		
-		return $query->select('\Application\Domain\Object\Lead');
+		return $query->select('Application\Domain\Object\Lead');
 	}
 	
 	/**
 	 * Sélectionner un prospect par son identifiant
 	 */
-  public function getLeadById($id, DomainObject\Lead $lead)
+  public function getLeadById($id)
 	{
 		$query = new Mongo\QueryObject($this->_context);
-		$lead = $query->from('\Application\Domain\Object\Lead')
+		$lead = $query->from('Application\Domain\Object\Lead')
 									->addCriteria(new SimpleCriteria('_id', '==', $id))
 									->first();
 	}
@@ -78,7 +78,7 @@ class LeadRepository implements Repository\ILeadRepository
 	 * Sélectionne un prospect par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getLeadsByOwnerId($ownerId)
+	public function getLeadsByCreatorId($creatorId)
 	{
 		
 	}

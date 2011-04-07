@@ -32,6 +32,7 @@
 namespace Application\Service;
 use Application\Domain;
 use Application\Domain\Object as DomainObject;
+use Application\Domain\Service as DomainService;
 use Application\Domain\Repository as Repository;
 
 /**
@@ -52,7 +53,7 @@ class LeadApplicationService implements ILeadApplicationService
   /**
    * Constructeur
    */
-  public function __construct(Domain\ILeadConverterDomainService $leadDomainService, Repository\ILeadRepository $repository)
+  public function __construct(DomainService\ILeadConverterDomainService $leadDomainService, Repository\ILeadRepository $repository)
   {
     $this->_leadDomainService = $leadDomainService;
   	$this->_repository = $repository;
@@ -73,7 +74,7 @@ class LeadApplicationService implements ILeadApplicationService
 	/**
 	 * Sélectionner un prospect par son identifiant
 	 */
-	public function getLeadById($id, DomainObject\Lead $lead)
+	public function getLeadById($id)
 	{
 		try {	
 			return $this->_repository->getLeadById($id, $lead);
@@ -86,7 +87,7 @@ class LeadApplicationService implements ILeadApplicationService
 	 * Sélectionner un prospect par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getLeadByOwnerId($ownerId)
+	public function getLeadsByCreatorId($creatorId)
 	{
 		try {	
 			return $this->_repository->getLeadByOwnerId($ownerId);
@@ -98,7 +99,7 @@ class LeadApplicationService implements ILeadApplicationService
 	/**
 	 * Ajouter un prospect
 	 */
-	public function addLead(ApplicationModel\Lead $lead)
+	public function addLead(DomainObject\Lead $lead)
 	{
 		try {	
 			$this->_repository->addLead($lead);
@@ -110,7 +111,7 @@ class LeadApplicationService implements ILeadApplicationService
 	/**
 	 * Modifier un prospect
 	 */
-	public function modifyLead(ApplicationModel\Lead $lead)
+	public function modifyLead(DomainObject\Lead $lead)
 	{
 		try {	
 			$this->_repository->modifyLead($lead);
@@ -122,7 +123,7 @@ class LeadApplicationService implements ILeadApplicationService
 	/**
 	 * Supprimer un prospect
 	 */
-	public function removeLead(ApplicationModel\Lead $lead)
+	public function removeLead(DomainObject\Lead $lead)
 	{
 		try {	
 			$this->_repository->removeLead($lead);
@@ -134,7 +135,7 @@ class LeadApplicationService implements ILeadApplicationService
   /**
    * Convertir un prospect en contact
    */
-  public function convertLeadToContact(ApplicationModel\Lead $lead, ApplicationModel\Contact $contact)
+  /*public function convertLeadToContact(ApplicationModel\Lead $lead, ApplicationModel\Contact $contact)
   {
     try {	
     	$options = $lead->toArray();
@@ -143,5 +144,5 @@ class LeadApplicationService implements ILeadApplicationService
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
-  }
+  }*/
 }

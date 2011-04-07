@@ -77,6 +77,7 @@ class Bootstrap extends \Zend\Application\Bootstrap
     $broker->register('LeadHelper', new \Application\Plugin\LeadHelper());
     $broker->register('ContactHelper', new \Application\Plugin\ContactHelper());
     $broker->register('AccountHelper', new \Application\Plugin\AccountHelper());
+    $broker->register('DiHelper', new \Application\Plugin\DiHelper());
    
     // Configure et enregistre le plugin de cache
     /*$config = new \Zend\Config\Config($this->getOptions());

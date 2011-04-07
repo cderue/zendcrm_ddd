@@ -10,7 +10,7 @@ use \Application\Domain\Object as DomainObject;
  */
 interface ILeadConverterDomainService
 {
-  public function performConversionToContact(DomainObject\Lead $lead, DomainObject\Contact $contact);
-  public function performConversionToAccount(DomainObject\Lead $lead, DomainObject\Account $account);
-	public function performConversionToOpportunity(DomainObject\Lead $lead, DomainObject\Opportunity $opportunity);
+  public function performConversionToContact();
+  public function performConversionToAccount();
+	public function performConversionToOpportunity();
 }

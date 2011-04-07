@@ -9,12 +9,12 @@ namespace MongoEntity;
  */
 class EntityContext implements IUnitOfWork
 {
-  const ADDED    = 1;
+  /*const ADDED    = 1;
 	const DIRTY  	 = 2;
 	const DELETED  = 3;
 	const ATTACHED = 4;
 	const DETACHED = 5;
-  
+  */
   /**
 	 * Document Mapper
 	 */	
@@ -23,35 +23,35 @@ class EntityContext implements IUnitOfWork
    * Etats des entités du contexte
    * (ADDED, DIRTY, DELETED, ATTACHED ou DETACHED)
    */
-  private $_states = array();
+  //private $_states = array();
 	/**
 	 * Entités ajoutées au contexte
 	 */
-  private $_added = array();  
+  //private $_added = array();  
   /**
 	 * Entités modifiées dans le contexte
 	 */
-  private $_updated = array();
+  //private $_updated = array();
   /**
 	 * Entités supprimées du contexte
 	 */
-  private $_deleted = array();
+  private $_delete = array();
   /**
    * Entités attachées au contexte
    */
-  private $_attached = array();
+  private $_persist = array();
   /**
    * Configuration de la connexion
    */
-  private $_config = null;
+  //private $_config = null;
   
 	/**
 	 * Constructeur
 	 */
   public function __construct($config)
   {
-    $this->_config = $config;
-    $this->_mapper = new ObjectDocumentMapper($this->_config);
+    //$this->_config = $config;
+    $this->_mapper = new Persister($config);
   }
   
   public function getMapper()
@@ -62,34 +62,33 @@ class EntityContext implements IUnitOfWork
 	/**
 	 * Ajouter une entité
 	 */
-	public function addEntity($entity) {
+	public function persistEntity($entity) {
+		$class = get_class($entity);
 		$uid = spl_object_hash($entity);
-		if (!array_key_exists($uid, $this->_dirty)) {
-			$this->_add[$uid] = $entity; 
-		}
-		$this->_states[$uid] = self::ADDED;
+		$this->_persist[$class][$uid] = $entity; 
+		//$this->_states[$uid] = self::ADDED;
   }
 	
 	/**
 	 * Mettre à jour une entité
 	 */  
+  /*
   public function updateEntity($entity) {
     $uid = spl_object_hash($entity);
     if (!array_key_exists($uid, $this->_dirty)) {
     	$this->_dirty[$uid] = $entity; 
     }
     $this->_states[$uid] = self::DIRTY;
-  }
+  }*/
 	
 	/**
 	 * Supprimer une entité
 	 */
   public function deleteEntity($entity) {
-  	$uid = spl_object_hash($entity);
-    if (!array_key_exists($uid, $this->_delete)) {
-    	$this->_delete[$uid] = $entity; 
-    }
-    $this->_states[$uid] = self::DELETED;
+  	$class = get_class($entity);
+		$uid = spl_object_hash($entity);
+		$this->_delete[$class][$uid] = $entity; 
+    
  	}
  	
  	/**
@@ -97,16 +96,16 @@ class EntityContext implements IUnitOfWork
  	 * Enter description here ...
  	 * @param unknown_type $entity
  	 */
- 	public function attachEntity($entity)
+ 	/*public function attachEntity($entity)
  	{
  		$id = $this->_getIdentifierValue($entity);
- 	}
+ 	}*/
  	
  	/**
  	 * Détacher une entité du contexte
  	 * @param object $entity
  	 */
- 	public function detachEntity($entity)
+ 	/*public function detachEntity($entity)
  	{
  		$uid = spl_object_hash($entity);
     if (array_key_exists($uid, $this->_states)) {
@@ -126,27 +125,27 @@ class EntityContext implements IUnitOfWork
     	} 
     }
     $this->_states[$uid] = self::DETACHED;
- 	}
+ 	}*/
   
   /**
-	 * Sauvegarder les modifications du contexte en base de données 
+	 * Sauvegarder le contexte en base de données 
 	 */
-  public function persist() {
+  public function commit() {
     //
-  	foreach ($this->_add as $obj) {
-      $mapper->finder()->update($obj);
+  	foreach ($this->_persist as $obj) {
+      $this->_mapper->save($obj);
     }
     //
-    foreach ($this->_dirty as $obj) {
-      $obj->finder()->insert($obj);
+    foreach ($this->_delete as $obj) {
+      $this->_mapper->delete($obj);
     }
-    //
-  	foreach ($this->_dirty as $obj) {
-      $obj->finder()->insert($obj);
-    }
-    //
-    $this->_add = array();
-    $this->_dirty = array();
+   	
+   	$this->clear(); 
+  }
+  
+  public function clean()
+  {
+    $this->_persist = array();
     $this->_delete = array();
   }
   
@@ -154,6 +153,7 @@ class EntityContext implements IUnitOfWork
    * Obtenir la valeur de l'Id d'une entité
    * @param object $entity
    */
+  /*
   private function _getIdentifierValue($entity)
   {
   	// Inspecte l'entité par réflection pour trouver l'Id
@@ -171,5 +171,18 @@ class EntityContext implements IUnitOfWork
 				return $id;
 			}
 		}
-  }
+  }*/
+  
+
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $entity
+	 */
+  /*
+	private function _calculateKey($entity) {
+		$key = get_class($entity) . '-' . $this->_getIdentifierValue($entity);
+		return $key;
+	}*/
 }

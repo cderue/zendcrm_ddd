@@ -1,5 +1,6 @@
 <?php
 
+
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(__DIR__ . '/../application'));
@@ -11,6 +12,11 @@ defined('APPLICATION_ENV')
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
+    get_include_path()
+)));
+
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(APPLICATION_PATH . '/../library/SymfonyDI'),
     get_include_path()
 )));
 /*
@@ -35,9 +41,10 @@ $loader = new \Zend\Loader\StandardAutoloader();
 // the path can be absolute or relative below: 
 $loader->registerNamespace('Zend', __DIR__ . '/../library/Zend'); 
 $loader->registerNamespace('MongoEntity', __DIR__ . '/../library/MongoEntity'); 
-$loader->registerNamespace('Application\Repository', __DIR__ . '/../application/data');
+$loader->registerNamespace('Application\Data\Repository', __DIR__ . '/../application/data/repositories');
 $loader->registerNamespace('Application\Domain\Repository', __DIR__ . '/../application/domain');
 $loader->registerNamespace('Application\Domain\Object', __DIR__ . '/../application/domain/objects');
+$loader->registerNamespace('Application\Domain\Service', __DIR__ . '/../application/domain/services');
 /** TO START AUTOLOADING */ 
 $loader->register(); 
 

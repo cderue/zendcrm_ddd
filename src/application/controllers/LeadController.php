@@ -49,7 +49,7 @@ class LeadController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct();
+  	$this->_service = $this->broker('DiHelper')->direct()->getService('lead_application');
   }
 	
   /**
@@ -65,19 +65,6 @@ class LeadController extends \Zend\Controller\Action
    */
   public function listAction()
   {
-    $sc = new DiContainer(
-    	array(
-  			'mailer.username' => 'foo',
-  			'mailer.password' => 'bar',
-  			'mailer.class'    => 'Zend_Mail',
-			)
-		);
-  	
-  	if ($sc->hasService('mailer')) {
-  		$mailer = $sc->getService('mailer');
-		}
-		$sc->setService('mailer', $mailer);
-  	
 		$leads = $this->_service->getLeads();   
     $this->view->leads = $leads;
   }

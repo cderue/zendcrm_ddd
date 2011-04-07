@@ -11,8 +11,8 @@ use \Application\Domain\Object as DomainObject;
 interface ILeadApplicationService
 {
 	public function getLeads();
-	public function getLeadById($id, DomainObject\Lead $lead);
-	public function getLeadsByOwnerId($ownerId);
+	public function getLeadById($id);
+	public function getLeadsByCreatorId($creatorId);
 	public function addLead(DomainObject\Lead $lead);
 	public function modifyLead(DomainObject\Lead $lead);
 	public function removeLead(DomainObject\Lead $lead);

@@ -16,12 +16,13 @@ class DiHelper extends \Zend\Controller\Action\Helper\AbstractHelper
 	{
     $container = new DiContainer(
     	array(
-  			'domain.leadconverter.class' => '\Application\Domain\Service\LeadConverterDomainService',
-  			'repository.user.class' => '\Application\Repository\UserRepository',
-  			'repository.contact.class'    => '\Application\Repository\ContactRepository',
-    		'repository.lead.class' => '\Application\Repository\LeadRepository',
-    		'repository.account.class' => '\Application\Repository\AccountRepository',
-    		'repository.opportunity.class' => '\Application\Repository\OpportunityRepository',
+  			'entity.context.class' => '\MongoEntity\EntityContext',
+    		'domain.leadconverter.class' => '\Application\Domain\Service\LeadConverterDomainService',
+  			'repository.user.class' => '\Application\Data\Repository\UserRepository',
+  			'repository.contact.class'    => '\Application\Data\Repository\ContactRepository',
+    		'repository.lead.class' => '\Application\Data\Repository\LeadRepository',
+    		'repository.account.class' => '\Application\Data\Repository\AccountRepository',
+    		'repository.opportunity.class' => '\Application\Data\Repository\OpportunityRepository',
     		'application.user.class' => '\Application\Service\UserApplicationService',
     		'application.contact.class' => '\Application\Service\ContactApplicationService',
     		'application.lead.class' => '\Application\Service\LeadApplicationService',
@@ -29,6 +30,8 @@ class DiHelper extends \Zend\Controller\Action\Helper\AbstractHelper
     		'application.opportunity.class' => '\Application\Service\OpportunityApplicationService'
 			)
 		);
+		
+		return $container;
   }
 	
   /**

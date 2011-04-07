@@ -83,9 +83,9 @@ class QueryObject
 		$this->getFilterExpression($expression);
 		$entities = $this->_context->getMapper()->findMany($entityClassName, $expression);
 		
-		foreach ($entities as $entity) {
+		/*foreach ($entities as $entity) {
 			$this->_context->attachEntity($entity);
-		} 
+		} */
 		
 		return $entities;
 	}

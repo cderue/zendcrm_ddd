@@ -10,41 +10,13 @@ namespace Application\Domain\Service;
 class LeadConverterDomainService implements ILeadConverterDomainService
 {
   /**
-   * 
-   * Enter description here ...
-   * @var unknown_type
-   */
-	private $_opportunityName;
-  /**
-   * 
-   * Enter description here ...
-   * @var unknown_type
-   */
-  private $_opportunityDateClosed;
-  
-  /**
-   * Constructeur
-   * @param string $opportunityName
-   * @param string $opportunityDateClosed
-   */
-	public function __construct($opportunityName, $opportunityDateClosed)
-  {
-  	$this->_opportunityName = $opportunityName;
-  	$this->_opportunityDateClosed = $opportunityDateClosed;
-  }
-  
-  /**
    * Créer un nouveau contact à partir d'un prospect
    * @param DomainObject\Lead $lead
    * @param DomainObject\Contact $contact
    */	
-  public function performConversionToContact(
-    DomainObject\Lead $lead,
-    DomainObject\Contact $contact,
-    DomainObject\Account $account,
-    DomainObject\Opportunity $opportunity)
+  public function performConversionToContact()
   {	
-    $account->setName($lead->getAccount());
+    /*$account->setName($lead->getAccount());
   	$account->setCreator($lead->getCreator());
     
   	$contact->setId($lead->getId());
@@ -61,6 +33,16 @@ class LeadConverterDomainService implements ILeadConverterDomainService
     $contact->setCreator($lead->getCreator());
     
     $opportunity->setName($this->_opportunityName);
-    $opportunity->setDateClosed($this->_opportunityDateClosed);
+    $opportunity->setDateClosed($this->_opportunityDateClosed);*/
+  }
+  
+  public function performConversionToAccount()
+  {
+  	
+  }
+  
+  public function performConversionToOpportunity()
+  {
+  	
   }
 }
