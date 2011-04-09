@@ -89,7 +89,7 @@ try {
 		'firstname' 	=> 'Caroline',
 		'lastname' 		=> 'Durdan',
 		'email' 			=> 'caroline.durdan@pharmacie-gv.com',
-		'society' 		=> 'Pharmacie du Grand Vallon',
+		'account' 		=> 'Pharmacie du Grand Vallon',
 		'phoneOffice' => '0418228990',
 		'status' 			=> '1',
 		'creator' 		=> 'admin'
@@ -100,7 +100,7 @@ try {
 		'firstname' 	 => 'Edouard',
 		'lastname' 		 => 'Parège',
 		'email' 			 => 'edouard.parege@itservices.com',
-		'society'			 => 'IT Services',
+		'account'			 => 'IT Services',
 		'phone_office' => '0116278001',
 		'status' 			 => '1',
 		'creator' 		 => 'admin'

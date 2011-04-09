@@ -37,7 +37,7 @@ use \MongoEntity as Mongo;
 /**
  * Repository d'accès aux comptes clients
  */
-class AccountRepository implements IAccountRepository
+class AccountRepository implements Repository\IAccountRepository
 {
   /**
 	 * Contexte
@@ -57,25 +57,25 @@ class AccountRepository implements IAccountRepository
 	 */
   public function getAccounts()
 	{	
-		$query = new \Mongo\QueryObject('Account');
-		return $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->select('Application\Domain\Object\Account');
 	}
 	
 	/**
 	 * Sélectionner un compte client par son identifiant
 	 */
-  public function getAccountById($id, DomainObject\Account $account)
+  public function getAccountById($id)
 	{
-		$query = new \Mongo\QueryObject('Account');
-		$query->addCriteria(new SimpleCriteria('_id', '==', $id));
-		$account = $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new Mongo\SimpleCriteria('_id', '==', $id))
+								 ->first('Application\Domain\Object\Account');	
 	}
 	
 	/**
 	 * Sélectionne un compte client par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getAccountsByOwnerId($ownerId)
+	public function getAccountsByCreatorId($creatorId)
 	{
 		$query = new \Mongo\QueryObject('Account');
 		$query->addCriteria(new SimpleCriteria(array('_owner' => '_id'), '==', $ownerId));

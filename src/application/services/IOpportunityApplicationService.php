@@ -11,8 +11,8 @@ use \Application\Domain\Object as DomainObject;
 interface IOpportunityApplicationService
 {
 	public function getOpportunities();
-	public function getOpportunityById($id, DomainObject\Opportunity $opportunity);
-	public function getOpportunitiesByOwnerId($ownerId);
+	public function getOpportunityById($id);
+	public function getOpportunitiesByCreatorId($creatorId);
 	public function addOpportunity(DomainObject\Opportunity $opportunity);
 	public function modifyOpportunity(DomainObject\Opportunity $opportunity);
 	public function removeOpportunity(DomainObject\Opportunity $opportunity);

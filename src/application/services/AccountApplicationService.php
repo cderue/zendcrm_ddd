@@ -66,10 +66,10 @@ class AccountApplicationService implements IAccountApplicationService
 	/**
 	 * Sélectionner un compte client par son identifiant
 	 */
-	public function getAccountById($id, ApplicationModel $account)
+	public function getAccountById($id)
 	{
 		try {	
-			return $this->_repository->getAccountById($id, $account);
+			return $this->_repository->getAccountById($id);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
@@ -79,10 +79,10 @@ class AccountApplicationService implements IAccountApplicationService
 	 * Sélectionner un compte client par l'identifiant
 	 * des on propriétaire 
 	 */
-	public function getAccountByOwnerId($ownerId)
+	public function getAccountsByCreatorId($creatorId)
 	{
 		try {	
-			return $this->_repository->getAccountByOwnerId($ownerId);
+			return $this->_repository->getAccountByCreatorId($creatorId);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
@@ -91,7 +91,7 @@ class AccountApplicationService implements IAccountApplicationService
 	/**
 	 * Ajouter un compte client
 	 */
-	public function addAccount(ApplicationModel\Account $account)
+	public function addAccount(DomainObject\Account $account)
 	{
 		try {	
 			$this->_repository->addAccount($account);
@@ -103,7 +103,7 @@ class AccountApplicationService implements IAccountApplicationService
 	/**
 	 * Modifier un compte client
 	 */
-	public function modifyAccount(ApplicationModel\Account $account)
+	public function modifyAccount(DomainObject\Account $account)
 	{
 		try {	
 			$this->_repository->modifyAccount($account);
@@ -115,7 +115,7 @@ class AccountApplicationService implements IAccountApplicationService
 	/**
 	 * Supprimer un compte client
 	 */
-	public function removeAccount(ApplicationModel\Account $account)
+	public function removeAccount(DomainObject\Account $account)
 	{
 		try {	
 			$this->_repository->removeAccount($account);

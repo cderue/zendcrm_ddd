@@ -39,6 +39,6 @@ class SimpleCriteria implements ICriteria
 	
 	public function getExpression()
 	{
-		return "(this.$this._field" . " " . "$this->_operator" . " " . "$this->_value)";
+		return "(this.$this->_field" . " " . "$this->_operator" . " " . "$this->_value)";
 	}
 }

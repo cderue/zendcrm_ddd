@@ -37,7 +37,7 @@ use \MongoEntity as Mongo;
 /**
  * Repository d'accès aux opportunités
  */
-class OpportunityRepository implements IOpportunityRepository
+class OpportunityRepository implements Repository\IOpportunityRepository
 {
   /**
 	 * Contexte
@@ -57,25 +57,25 @@ class OpportunityRepository implements IOpportunityRepository
 	 */
   public function getOpportunities()
 	{
-		$query = new \Mongo\QueryObject('Opportunity');
-		return $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->select('Application\Domain\Object\Opportunity');
 	}
 	
 	/**
 	 * Sélectionner une opportunité par son identifiant
 	 */
-  public function getOpportunityById($id, ApplicationModel\Opportunity $opportunity)
+  public function getOpportunityById($id)
 	{
-		$query = new \Mongo\QueryObject('Opportunity');
-		$query->addCriteria(new SimpleCriteria('_id', '==', $id));
-		$opportunity = $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new Mongo\SimpleCriteria('_id', '==', $id))
+								 ->first('Application\Domain\Object\Opportunity');	
 	}
 	
 	/**
 	 * Sélectionne une opportunité par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getOpportunitiesByOwnerId($ownerId)
+	public function getOpportunitiesByCreatorId($creatorId)
 	{
 		
 	}

@@ -49,7 +49,7 @@ class OpportunityController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct();
+  	$this->_service = $this->broker('DiHelper')->direct()->getService('opportunity_application');
   }
   
   /**
@@ -68,41 +68,6 @@ class OpportunityController extends \Zend\Controller\Action
     $opportunities = $this->_service->getOpportunities(); 
     $this->view->opportunities = $opportunities;
   }
-  
-  /**
-   * Afficher un flux RSS des opportunités récentes
-   */
-  public function rssAction()
-  {
-    $writer = new \Zend\Feed\Writer\Feed();  
-    $opportunities = $this->_mapper->fetchAll('opportunities');
-    
-    foreach ($opportunities as $opportunity) {
-      $entry = $writer->createEntry();   
-      $entry->setTitle($opportunity->getName());
-      $entry->setLink('/opportunity/view/id/' . $opportunity->getId());
-      $writer->addEntry($entry);
-    }
-    /*
-    $rss = array(
-      'title' => 'Opportunités récentes',
-      'link' => '/lead/opportunity/list',
-      'charset' => 'UTF8',
-      'entries' => $entries
-    );*/
-    $writer->export('rss');
-    
-    /*
-    $rssFeed = $feed->saveXML();
-    
-    $fh = fopen('', 'w');
-    fwrite($fh, $rssFeed);
-    fclose($fh);*/
-    // now send the feed
-    //$this->_helper->viewRenderer->setNoRender();
-    //$this->_helper->layout->disableLayout();
-    //$feed->send();
-  }
     
   /**
    * Voir une opportunité
@@ -110,9 +75,7 @@ class OpportunityController extends \Zend\Controller\Action
   public function viewAction()
   {
     $id = $this->_request->getParam('id');
-    $opportunity = new \Application\Model\Opportunity();
-    $this->_mapper->find($id, $opportunity);
-    $this->view->opportunity = $opportunity;
+		$this->view->opportunity = $this->_service->getOpportunityById($id);
   }
     
   /**

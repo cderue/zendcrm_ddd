@@ -77,7 +77,7 @@ class LeadApplicationService implements ILeadApplicationService
 	public function getLeadById($id)
 	{
 		try {	
-			return $this->_repository->getLeadById($id, $lead);
+			return $this->_repository->getLeadById($id);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}

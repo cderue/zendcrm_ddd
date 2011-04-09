@@ -69,18 +69,17 @@ class LeadRepository implements Repository\ILeadRepository
   public function getLeadById($id)
 	{
 		$query = new Mongo\QueryObject($this->_context);
-		$lead = $query->from('Application\Domain\Object\Lead')
-									->addCriteria(new SimpleCriteria('_id', '==', $id))
-									->first();
+		return $query->addCriteria(new Mongo\SimpleCriteria('_id', '==', $id))
+								 ->first('Application\Domain\Object\Lead');	
 	}
 	
 	/**
 	 * Sélectionne un prospect par l'identifiant
-	 * de son propriétaire
+	 * de son créateur
 	 */
 	public function getLeadsByCreatorId($creatorId)
 	{
-		
+		$query = new Mongo\QueryObject($this->_context);
 	}
 	
 	/**

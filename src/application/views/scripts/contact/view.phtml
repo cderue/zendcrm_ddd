@@ -44,9 +44,9 @@
 
 <div class="ui-body ui-body-c">
   <dl class="details">
-  <?php if ($this->contact->getSociety()): ?>
+  <?php if ($this->contact->getAccount()): ?>
   <dt>Société :</dt>
-  <dd><?php echo $this->contact->getSociety(); ?></dd>
+  <dd><?php echo $this->contact->getAccount(); ?></dd>
   <?php endif; ?>
   
   <?php if ($this->contact->getDepartment()): ?>

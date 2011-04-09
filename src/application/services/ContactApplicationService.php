@@ -46,7 +46,7 @@ class ContactApplicationService implements IContactApplicationService
 	/**
 	 * Constructeur
 	 */
-	public function __construct(Repository\ContactRepository $repository)
+	public function __construct(Repository\IContactRepository $repository)
 	{
 		$this->_repository = $repository;
 	}
@@ -66,10 +66,10 @@ class ContactApplicationService implements IContactApplicationService
 	/**
 	 * Sélectionner un contact par son identifiant
 	 */
-	public function getContactById($id, ApplicationModel\Contact $contact)
+	public function getContactById($id)
 	{
 		try {
-			return $this->_repository->getContactById($id, $contact);
+			return $this->_repository->getContactById($id);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
@@ -79,10 +79,10 @@ class ContactApplicationService implements IContactApplicationService
 	 * Sélectionner un contact par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getContactByOwnerId($ownerId)
+	public function getContactsByCreatorId($creatorId)
 	{
 		try {
-			return $this->_repository->getContactByOwnerId($ownerId);
+			return $this->_repository->getContactByCreatorId($creatorId);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
@@ -91,7 +91,7 @@ class ContactApplicationService implements IContactApplicationService
 	/**
 	 * Ajouter un contact
 	 */
-	public function addContact(ApplicationModel\Contact $contact)
+	public function addContact(DomainObject\Contact $contact)
 	{
 		try {
 			$this->_repository->addContact($contact);
@@ -103,7 +103,7 @@ class ContactApplicationService implements IContactApplicationService
 	/**
 	 * Modifier un contact
 	 */
-	public function modifyContact(ApplicationModel\Contact $contact)
+	public function modifyContact(DomainObject\Contact $contact)
 	{
 		try {
 			$this->_repository->modifyContact($contact);
@@ -115,7 +115,7 @@ class ContactApplicationService implements IContactApplicationService
 	/**
 	 * Supprimer un contact
 	 */
-	public function removeContact(ApplicationModel\Contact $contact)
+	public function removeContact(DomainObject\Contact $contact)
 	{
 		try {
 			$this->_repository->removeContact($contact);

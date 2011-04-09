@@ -75,9 +75,7 @@ class LeadController extends \Zend\Controller\Action
   public function viewAction()
   {
 		$id = $this->_request->getParam('id');
-    $lead = new DomainObject\Lead();
-		$this->_service->getLeadById($id, $lead);
-		$this->view->lead = $lead;
+		$this->view->lead = $this->_service->getLeadById($id);
   }
     
   /**

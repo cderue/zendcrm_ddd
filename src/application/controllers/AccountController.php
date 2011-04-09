@@ -48,7 +48,7 @@ class AccountController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct();
+  	$this->_service = $this->broker('DiHelper')->direct()->getService('account_application');
   }
 	
   /**
@@ -73,10 +73,8 @@ class AccountController extends \Zend\Controller\Action
    */
   public function viewAction()
   {
-    $id = $this->_request->getParam('id');
-    $account = new \Application\Model\Account();
-    $this->_service->getAccount($id, $account);
-    $this->view->account = $account;
+  	$id = $this->_request->getParam('id');
+		$this->view->account = $this->_service->getAccountById($id);
   }
     
   /**

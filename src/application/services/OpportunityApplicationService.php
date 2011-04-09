@@ -66,10 +66,10 @@ class OpportunityApplicationService implements IOpportunityApplicationService
 	/**
 	 * Sélectionner une opportunité par son identifiant
 	 */
-	public function getOpportunityById($id, ApplicationModel\Opportunity $opportunity)
+	public function getOpportunityById($id)
 	{
 		try {	
-			return $this->_repository->getOpportunityById($id, $opportunity);
+			return $this->_repository->getOpportunityById($id);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
@@ -79,10 +79,10 @@ class OpportunityApplicationService implements IOpportunityApplicationService
 	 * Sélectionner une opportunité par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getOpportunityByOwnerId($ownerId)
+	public function getOpportunitiesByCreatorId($creatorId)
 	{
 		try {	
-			return $this->_repository->getOpportunityByOwnerId($ownerId);
+			return $this->_repository->getOpportunitiesByCreatorId($creatorId);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
@@ -91,7 +91,7 @@ class OpportunityApplicationService implements IOpportunityApplicationService
 	/**
 	 * Ajouter une opportunité
 	 */
-	public function addOpportunity(ApplicationModel\Opportunity $opportunity)
+	public function addOpportunity(DomainObject\Opportunity $opportunity)
 	{
 		try {
 			$this->_repository->addOpportunity($opportunity);	
@@ -103,7 +103,7 @@ class OpportunityApplicationService implements IOpportunityApplicationService
 	/**
 	 * Modifier une opportunité
 	 */
-	public function modifyOpportunity(ApplicationModel\Opportunity $opportunity)
+	public function modifyOpportunity(DomainObject\Opportunity $opportunity)
 	{
 		try {
 			$this->_repository->modifyOpportunity($opportunity);	
@@ -115,7 +115,7 @@ class OpportunityApplicationService implements IOpportunityApplicationService
 	/**
 	 * 
 	 */
-	public function removeOpportunity(ApplicationModel\Opportunity $opportunity)
+	public function removeOpportunity(DomainObject\Opportunity $opportunity)
 	{
 		try {
 			$this->_repository->removeOpportunity($opportunity);	

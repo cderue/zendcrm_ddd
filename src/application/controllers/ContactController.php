@@ -49,7 +49,7 @@ class ContactController extends \Zend\Controller\Action
 	 */
 	public function init()
 	{
-		$this->_service = $this->broker('DiHelper')->direct();
+		$this->_service = $this->broker('DiHelper')->direct()->getService('contact_application');
 	}
 	
   /**
@@ -75,9 +75,7 @@ class ContactController extends \Zend\Controller\Action
   public function viewAction()
   {
     $id = $this->_request->getParam('id');
-    $contact = new \Application\Model\Contact();
-    $this->_mapper->find($id, $contact);
-    $this->view->contact = $contact;
+		$this->view->contact = $this->_service->getContactById($id);
   }
     
   /**

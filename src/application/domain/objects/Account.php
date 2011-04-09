@@ -127,11 +127,11 @@ class Account extends AbstractDomainEntity
     }
 		if (is_array($address)) {
 		  $this->_address = new Address(
-		  	$address['street'],
-		  	$address['city'],
-		  	$address['state'],
-		  	$address['zipCode'],
-				$address['country']		  	
+		  	isset($address['street'])?$address['street']:'',
+		  	isset($address['city'])?$address['city']:'',
+		  	isset($address['state'])?$address['state']:'',
+		  	isset($address['zipCode'])?$address['zipCode']:'',
+				isset($address['country'])?$address['country']:''		  	
 			);
 		}
     
@@ -144,6 +144,11 @@ class Account extends AbstractDomainEntity
 	public function getAddress()
 	{
 		return $this->_address;
+	}
+	
+	public function __toString()
+	{
+		return $this->_name;
 	}
 }
 

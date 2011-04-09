@@ -90,26 +90,19 @@ class Persister
   /**
    * 
    */
-  public function findOne(array $criteria, $entity)
+  public function findOne($entityClassName , array $criteria)
   {
-    if (!ctype_alnum($id)) {
-      throw new \Exception('Invalid argument. $id must be alphanumeric.');  
-    }
-
-    $class = get_class($entity);
-    if (!array_key_exists($class, $this->_map)) {
-      throw new \Exception('Invalid entity class.');
+    if (!array_key_exists($entityClassName, $this->_map)) {
+      throw new \Exception('Invalid entity class');
     }
     
-    $collection = $this->_map[$class];
-    $criteria = array('_id' => new \MongoId($id));
+    $collection = $this->_map[$entityClassName];
     $result = $this->_driver->findOne($collection, $criteria);
     if (0 == count($result)) {
       return false;
     }
    
-    $this->_toEntity($result, $entity);
-    
+    return $this->_toEntity($result, new $entityClassName());
   }
   
   /**
@@ -163,6 +156,7 @@ class Persister
   {
   
     $document['id'] = $document['_id']->__toString();
+    unset($document['_id']);
     $entity->setOptions($document);
 
     return $entity;

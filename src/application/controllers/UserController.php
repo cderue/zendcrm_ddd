@@ -49,7 +49,7 @@ class UserController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct();
+  	$this->_service = $this->broker('DiHelper')->direct()->getService('user_application');
   }
   
   /**
@@ -133,9 +133,7 @@ class UserController extends \Zend\Controller\Action
   public function viewAction()
   {
     $id = $this->_request->getParam('id');
-    $user = new \Application\Model\User();
-    $this->_mapper->find($id, $user);
-    $this->view->user = $user;
+		$this->view->user = $this->_service->getUserById($id);
   }
     
   /**

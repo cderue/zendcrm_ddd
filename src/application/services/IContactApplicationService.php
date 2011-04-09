@@ -11,8 +11,8 @@ use \Application\Domain\Object as DomainObject;
 interface IContactApplicationService
 {
 	public function getContacts();
-	public function getContactById($id, DomainObject\Contact $contact);
-	public function getContactsByOwnerId($ownerId);
+	public function getContactById($id);
+	public function getContactsByCreatorId($creatorId);
 	public function addContact(DomainObject\Contact $contact);
 	public function modifyContact(DomainObject\Contact $contact);
 	public function removeContact(DomainObject\Contact $contact);

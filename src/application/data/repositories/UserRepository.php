@@ -37,7 +37,7 @@ use \MongoEntity as Mongo;
 /**
  * Repository d'accès aux utilisateurs
  */
-class UserRepository implements IUserRepository
+class UserRepository implements Repository\IUserRepository
 {
   /**
 	 * Contexte
@@ -57,25 +57,25 @@ class UserRepository implements IUserRepository
 	 */
   public function getUsers()
 	{
-		$query = new Mongo\QueryObject('User');
-		return $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->select('Application\Domain\Object\User');
 	}
 	
 	/**
 	 * Sélectionner un utilisateur par son identifiant
 	 */
-  public function getUserById($id, DomainObject\User $user)
+  public function getUserById($id)
 	{
-		$query = new \Mongo\QueryObject('User');
-		$query->addCriteria(new SimpleCriteria('_id', '==', $id));
-		$user = $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new Mongo\SimpleCriteria('_id', '==', $id))
+								 ->first('Application\Domain\Object\User');
 	}
 	
 	/**
 	 * Sélectionne un utilisateur par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getUsersByOwnerId($ownerId)
+	public function getUsersByCreatorId($creatorId)
 	{
 		
 	}

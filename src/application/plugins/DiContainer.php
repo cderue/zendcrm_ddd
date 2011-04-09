@@ -63,7 +63,7 @@ class DiContainer extends \sfServiceContainer
     }
     //
     $class = $this->parameters['repository.user.class'];
-    $service = new $class();
+    $service = new $class($this->getService('entity_context'));
    
     return self::$_shared['user_repository'] = $service;
   }
@@ -97,7 +97,7 @@ class DiContainer extends \sfServiceContainer
     }
     //
     $class = $this->parameters['repository.contact.class'];
-    $service = new $class();
+    $service = new $class($this->getService('entity_context'));
    
     return self::$_shared['contact_repository'] = $service;
   }
@@ -114,7 +114,7 @@ class DiContainer extends \sfServiceContainer
     }
     //
     $class = $this->parameters['repository.account.class'];
-    $service = new $class();
+    $service = new $class($this->getService('entity_context'));
    
     return self::$_shared['account_repository'] = $service;
   }
@@ -131,7 +131,7 @@ class DiContainer extends \sfServiceContainer
     }
     //
     $class = $this->parameters['repository.opportunity.class'];
-    $service = new $class();
+    $service = new $class($this->getService('entity_context'));
    
     return self::$_shared['opportunity_repository'] = $service;
   }
@@ -148,7 +148,9 @@ class DiContainer extends \sfServiceContainer
     }
     //
     $class = $this->parameters['application.user.class'];
-    $service = new $class();
+    $service = new $class(
+    	$this->getService('user_repository')
+    );
    
     return self::$_shared['user_application'] = $service;
   }
@@ -165,7 +167,9 @@ class DiContainer extends \sfServiceContainer
     }
     //
     $class = $this->parameters['application.contact.class'];
-    $service = new $class();
+    $service = new $class(
+    	$this->getService('contact_repository')
+    );
    
     return self::$_shared['contact_application'] = $service;
   }
@@ -196,13 +200,15 @@ class DiContainer extends \sfServiceContainer
    */
   protected function getAccountApplicationService()
   {
-  	if (isset(services::$_shared['account_application']))
+  	if (isset(self::$_shared['account_application']))
     {
       return self::$_shared['account_application'];
     }
     //
     $class = $this->parameters['application.account.class'];
-    $service = new $class();
+    $service = new $class(
+    	$this->getService('account_repository')
+    );
    
     return self::$_shared['account_application'] = $service;
   }
@@ -219,7 +225,9 @@ class DiContainer extends \sfServiceContainer
     }
     //
     $class = $this->parameters['application.opportunity.class'];
-    $service = new $class();
+    $service = new $class(
+    	$this->getService('opportunity_repository')
+    );
    
     return self::$_shared['opportunity_application'] = $service;
   }

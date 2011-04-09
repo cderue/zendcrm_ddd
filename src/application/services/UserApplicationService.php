@@ -66,10 +66,10 @@ class UserApplicationService implements IUserApplicationService
 	/**
 	 * Sélectionner un utilisateur par son identifiant
 	 */
-	public function getUserById($id, ApplicationModel\User $user)
+	public function getUserById($id)
 	{
 		try {
-			return $this->_repository->getUserById($id, $user);
+			return $this->_repository->getUserById($id);
 		} catch (\Exception $ex) {
 			
 		}
@@ -78,7 +78,7 @@ class UserApplicationService implements IUserApplicationService
 	/**
 	 * Sélectionner les utilisateurs par l'identifiant du propriétaire
 	 */
-	public function getUsersByOwnerId($ownerId)
+	public function getUsersByCreatorId($creatorId)
 	{
 		
 	}
@@ -86,7 +86,7 @@ class UserApplicationService implements IUserApplicationService
 	/**
 	 * Ajouter un utilisateur
 	 */
-	public function addUser(ApplicationModel\User $user)
+	public function addUser(DomainObject\User $user)
 	{
 		try {	
 			$this->_repository->addUser($user);
@@ -98,7 +98,7 @@ class UserApplicationService implements IUserApplicationService
 	/**
 	 * Modifier un utilisateur
 	 */
-	public function modifyUser(ApplicationModel\User $user)
+	public function modifyUser(DomainObject\User $user)
 	{
 		try {	
 			$this->_repository->modifyUser($user);
@@ -110,7 +110,7 @@ class UserApplicationService implements IUserApplicationService
 	/**
 	 * Supprimer un utilisateur
 	 */
-	public function removeUser(ApplicationModel\User $user)
+	public function removeUser(DomainObject\User $user)
 	{
 		try {	
 			$this->_repository->removeUser($user);

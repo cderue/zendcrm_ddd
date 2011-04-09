@@ -68,7 +68,7 @@ class QueryObject
 			}
 			$js = 'function() { return ';
 			$js .= implode(' && ', $implode);
-    	$js .= ' }';
+    	$js .= '; }';
     	
     	$expression = array('$where' => $js);
 		}
@@ -93,12 +93,12 @@ class QueryObject
 	/**
 	 * Obtenir la première entité qui satisfait tous les critères
 	 */
-	public function first()
+	public function first($entityClassName)
 	{
 		$expression = array();
 		$this->getFilterExpression($expression);
-		$entity = $this->_context->getMapper()->findOne($this->_entityClassName, $expression); 
-		$this->_context->attachEntity($entity);
+		$entity = $this->_context->getMapper()->findOne($entityClassName, $expression); 
+		//$this->_context->attachEntity($entity);
 		
 		return $entity;
 	}

@@ -37,7 +37,7 @@ use \MongoEntity as Mongo;
 /**
  * Repository d'accès aux contacts
  */
-class ContactRepository implements IContactRepository
+class ContactRepository implements Repository\IContactRepository
 {
 	/**
 	 * Contexte
@@ -57,25 +57,25 @@ class ContactRepository implements IContactRepository
 	 */
   public function getContacts()
 	{
-		$query = new \Mongo\QueryObject('Contact');
-		return $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->select('Application\Domain\Object\Contact');
 	}
 	
 	/**
 	 * Sélectionner un contact par son identifiant
 	 */
-  public function getContactById($id, DomainObject\Contact $contact)
+  public function getContactById($id)
 	{
-		$query = new \Mongo\QueryObject('Contact');
-		$query->addCriteria(new SimpleCriteria('_id', '==', $id));
-		$contact = $query->select();
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new Mongo\SimpleCriteria('_id', '==', $id))
+								 ->first('Application\Domain\Object\Contact');	
 	}
 	
 	/**
 	 * Sélectionne un contact par l'identifiant
 	 * de son propriétaire
 	 */
-	public function getContactsByOwnerId($ownerId)
+	public function getContactsByCreatorId($creatorId)
 	{
 		
 	}

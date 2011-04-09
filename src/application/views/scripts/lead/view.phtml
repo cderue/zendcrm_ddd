@@ -45,9 +45,9 @@
 
 <div class="ui-body ui-body-c">
   <dl class="details">
-  <?php if ($this->lead->getSociety()): ?>
+  <?php if ($this->lead->getAccount()): ?>
   <dt>Société :</dt>
-  <dd><?php echo $this->lead->getSociety(); ?></dd>
+  <dd><?php echo $this->lead->getAccount(); ?></dd>
   <?php endif; ?>
   
   <?php if ($this->lead->getDepartment()): ?>
