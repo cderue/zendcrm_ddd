@@ -49,8 +49,13 @@ class UserController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct()->getService('user_application');
+  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('user_application'));
   }
+  
+	public function setApplicationService(Service\IUserApplicationService $service)
+	{
+		$this->_service = $service;
+	}
   
   /**
    * Action par défaut

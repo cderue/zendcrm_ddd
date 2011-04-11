@@ -83,6 +83,8 @@ try {
 	
 	// Sauvegarde le compte client
 	$db->accounts->insert($account);
+	$account = $db->accounts->findOne(array('name' => 'IT Services'));
+	$accountRef = $db->accounts->createDBRef($account);
 	
 	// Crée un premier prospect
 	$leadOne = array(
@@ -114,7 +116,7 @@ try {
 	$contact = array(
 		'firstname' 	 => 'Bernard',
 		'lastname' 		 => 'Conte',
-		'account' 		 => $account,
+		'account'			 => $accountRef,
 		'job_title' 	 => 'Directeur',
 		'email' 			 => 'bernard.conte@itservices.com',
 		'phone_office' => '0116278004',
@@ -124,18 +126,25 @@ try {
 	// Sauvegarde le contact
 	$db->contacts->insert($contact);
 	
+	//$db->contacts->update(array('lastname' => 'Conte'), array('$push' => array('account' => $accountRef)));
+	$contact = $db->contacts->findOne(array('lastname' => 'Conte'));
+	$contactRef = $db->contacts->createDBRef($contact);
+	
 	// Crée une opportunité
 	$opportunity = array(
 		'name' => 'Sport & Co Intranet',
-		'account' => $account,
+		'account' => $accountRef,
 		'amount' => 200000,
 		'date_closed' => '28/11/2011',
-		'contact' => $contact,
+		'contact' => $contactRef,
 		'creator' => 'admin'
 	);
 	
 	// Sauvegarde l'opportunité
 	$db->opportunities->insert($opportunity);
+	//$opportunity = $db->opportunities->findOne(array('name' => 'Sport & Co Intranet'));
+	//$db->opportunities->update(array('name' => 'Sport & Co Intranet'), array('$push' => array('account' => $accountRef)));
+	//$db->opportunities->update(array('name' => 'Sport & Co Intranet'), array('$push' => array('contact' => $contactRef)));
 	
 	echo 'Database created successfully';
 } catch (\Exception $ex) {

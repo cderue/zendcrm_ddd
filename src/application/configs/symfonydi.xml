@@ -1,72 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" ?>
+
 <container xmlns="http://symfony-project.org/2.0/container">
   <parameters>
-    <parameter key="mongo.host">localhost</parameter>
-    <parameter key="mongo.port"></parameter>
-    <parameter key="mongo.username"></parameter>
-    <parameter key="mongo.password"></parameter>
-    <parameter key="mongo.dbname">zendcrm</parameter>
-    <parameter key="mongo.charset"></parameter>
+    <parameter key="entity.context.class">\MongoEntity\EntityContext</parameter>
+    <parameter key="domain.leadconverter.class">\Application\Domain\Service\LeadConverterDomainService</parameter>
+    <parameter key="repository.user.class">\Application\Data\Repository\UserRepository</parameter>
+    <parameter key="repository.contact.class">\Application\Data\Repository\ContactRepository</parameter>
+    <parameter key="repository.lead.class">\Application\Data\Repository\LeadRepository</parameter>
+    <parameter key="repository.account.class">\Application\Data\Repository\AccountRepository</parameter>
+    <parameter key="repository.opportunity.class">\Application\Data\Repository\OpportunityRepository</parameter>
+    <parameter key="application.user.class">\Application\Service\UserApplicationService</parameter>
+    <parameter key="application.contact.class">\Application\Service\ContactApplicationService</parameter>
+    <parameter key="application.lead.class">\Application\Service\LeadApplicationService</parameter>
+    <parameter key="application.account.class">\Application\Service\AccountApplicationService</parameter>
+    <parameter key="application.opportunity.class">\Application\Service\OpportunityApplicationService</parameter>
   </parameters>
   <services>
-  	<service id="" class="\MongoEntity\Repository\UserRepository" shared="false">
+    <service id="connection" class="\MongoEntity\Connection">
+      <argument>localhost</argument>
+      <argument>27017</argument>
+      <argument>zendcrm</argument>
       <argument type="collection">
-        <argument key="auth">login</argument>
-        <argument key="username">%mailer.username%</argument>
-        <argument key="password">%mailer.password%</argument>
-        <argument key="ssl">ssl</argument>
-        <argument key="port">465</argument>
       </argument>
     </service>
-    <service id="" class="\Application\Repository\UserRepository" shared="false">
-      <argument type="collection">
-        <argument key="auth">login</argument>
-        <argument key="username">%mailer.username%</argument>
-        <argument key="password">%mailer.password%</argument>
-        <argument key="ssl">ssl</argument>
-        <argument key="port">465</argument>
-      </argument>
+    <service id="entity.context" class="%entity.context.class%">
+      <argument type="service" id="connection" />
     </service>
-    <service id="" class="\Application\Repository\ContactRepository" shared="false">
-      <argument type="collection">
-        <argument key="auth">login</argument>
-        <argument key="username">%mailer.username%</argument>
-        <argument key="password">%mailer.password%</argument>
-        <argument key="ssl">ssl</argument>
-        <argument key="port">465</argument>
-      </argument>
+    <service id="lead.converter.domain" class="%domain.leadconverter.class%">
     </service>
-    <service id="" class="\Application\Repository\LeadRepository" shared="false">
-      <argument type="collection">
-        <argument key="auth">login</argument>
-        <argument key="username">%mailer.username%</argument>
-        <argument key="password">%mailer.password%</argument>
-        <argument key="ssl">ssl</argument>
-        <argument key="port">465</argument>
-      </argument>
+    <service id="user.repository" class="%repository.user.class%">
+      <argument type="service" id="entity.context" />
     </service>
-    <service id="" class="\Application\Repository\AccountRepository" shared="false">
-      <argument type="collection">
-        <argument key="auth">login</argument>
-        <argument key="username">%mailer.username%</argument>
-        <argument key="password">%mailer.password%</argument>
-        <argument key="ssl">ssl</argument>
-        <argument key="port">465</argument>
-      </argument>
+    <service id="contact.repository" class="%repository.contact.class%">
+      <argument type="service" id="entity.context" />
     </service>
-    <service id="" class="\Application\Repository\OpportunityRepository" shared="false">
-      <argument type="collection">
-        <argument key="auth">login</argument>
-        <argument key="username">%mailer.username%</argument>
-        <argument key="password">%mailer.password%</argument>
-        <argument key="ssl">ssl</argument>
-        <argument key="port">465</argument>
-      </argument>
+    <service id="lead.repository" class="%repository.lead.class%">
+      <argument type="service" id="entity.context" />
     </service>
-    <service id="mailer" class="%mailer.class%">
-      <call method="setDefaultTransport">
-        <argument type="service" id="mail.transport" />
-      </call>
+    <service id="account.repository" class="%repository.account.class%">
+      <argument type="service" id="entity.context" />
+    </service>
+    <service id="opportunity.repository" class="%repository.opportunity.class%">
+      <argument type="service" id="entity.context" />
+    </service>
+    <service id="user.application" class="%application.user.class%">
+      <argument type="service" id="user.repository" />
+    </service>
+    <service id="contact.application" class="%application.contact.class%">
+      <argument type="service" id="contact.repository" />
+    </service>
+    <service id="lead.application" class="%application.lead.class%">
+      <argument type="service" id="lead.converter.domain" />
+      <argument type="service" id="lead.repository" />
+    </service>
+    <service id="account.application" class="%application.account.class%">
+      <argument type="service" id="account.repository" />
+    </service>
+    <service id="opportunity.application" class="%application.opportunity.class%">
+      <argument type="service" id="opportunity.repository" />
     </service>
   </services>
 </container>

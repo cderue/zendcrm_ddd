@@ -17,25 +17,25 @@ class Driver
       return $this->_config;
   }
 	
-	public function __construct($config)
+	public function __construct(Connection $connection)
   {
-    if (!is_array($config)) {
+    /*if (!is_array($config)) {
         if ($config instanceof \Zend\Config\Config) {
             $config = $config->toArray();
         } else {
             throw new \Exception('Adapter parameters must be in an array or a Zend\Config object');
         }
-    }
+    }*/
 
-    $this->_checkRequiredOptions($config);
-    $this->_config = array_merge($this->_config, $config);
+    //$this->_checkRequiredOptions($config);
+    //$this->_config = array_merge($this->_config, $config);
     // Crée une nouvelle connexion à MongoDB
-    $mongo = new \Mongo();
-    $this->_connection = $mongo->zendcrm;
+    //$mongo = new \Mongo();
+    $this->_connection = $connection->getDatabase();
     // Sélectionne la base de données 'zendcrm'
     
   }  
-    
+  /*
   protected function _checkRequiredOptions(array $config)
   {
   	if (!array_key_exists('dbname', $config)) {
@@ -49,7 +49,7 @@ class Driver
       if (!array_key_exists('username', $config)) {
           throw new \Exception("Configuration array must have a key for 'username' for login credentials");
       }
-  }
+  }*/
   
   /*protected function connect()
   {

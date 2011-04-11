@@ -49,8 +49,13 @@ class OpportunityController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct()->getService('opportunity_application');
+  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('opportunity_application'));
   }
+  
+	public function setApplicationService(Service\IOpportunityApplicationService $service)
+	{
+		$this->_service = $service;
+	}
   
   /**
    * Action par défaut

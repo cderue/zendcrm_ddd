@@ -29,10 +29,9 @@
 /**
  * @namespace
  */
+use Application\Service\IContactApplicationService;
 use Application\Form as ApplicationForm;
-use Application\Service as ApplicationService;
-use ApplicationModel as ApplicationModel;
-use Application\Model\Repository as ApplicationRepository;  
+use Application\Service as ApplicationService; 
 
 /**
  * Contrôleur d'action pour la gestion des contacts
@@ -49,7 +48,12 @@ class ContactController extends \Zend\Controller\Action
 	 */
 	public function init()
 	{
-		$this->_service = $this->broker('DiHelper')->direct()->getService('contact_application');
+		$this->setApplicationService($this->broker('DiHelper')->direct()->getService('contact_application'));
+	}
+	
+	public function setApplicationService(Service\IContactApplicationService $service)
+	{
+		$this->_service = $service;
 	}
 	
   /**

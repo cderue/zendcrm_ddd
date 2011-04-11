@@ -31,7 +31,7 @@
  */
 use Application\Form as Form;
 use Application\Service as Service;
-use Application\Domain\Object as DomainObject;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+use Application\Domain\Repository as Repository;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
 /**
  * Contrôleur d'action pour la gestion des comptes clients
@@ -48,8 +48,13 @@ class AccountController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct()->getService('account_application');
+  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('account_application'));
   }
+  
+public function setApplicationService(Service\IAccountApplicationService $service)
+	{
+		$this->_service = $service;
+	}
 	
   /**
    * Action par défaut

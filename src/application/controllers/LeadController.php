@@ -49,8 +49,13 @@ class LeadController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->_service = $this->broker('DiHelper')->direct()->getService('lead_application');
+  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('lead.application'));
   }
+  
+	public function setApplicationService(Service\ILeadApplicationService $service)
+	{
+		$this->_service = $service;
+	}
 	
   /**
    * Action par défaut

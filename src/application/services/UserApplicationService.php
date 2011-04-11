@@ -71,7 +71,7 @@ class UserApplicationService implements IUserApplicationService
 		try {
 			return $this->_repository->getUserById($id);
 		} catch (\Exception $ex) {
-			
+			// Zend_Log
 		}
 	}
 	

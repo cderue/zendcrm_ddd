@@ -50,9 +50,9 @@ class Persister
   /**
    * Contructeur
    */
-  public function __construct($config)
+  public function __construct(Connection $connection)
   {
-    $this->_driver = new Driver($config);
+    $this->_driver = new Driver($connection);
   	$this->_map = array(
       'Application\Domain\Object\User'        => 'users',
       'Application\Domain\Object\Lead'        => 'leads',

@@ -5,7 +5,7 @@
 namespace MongoEntity;
 
 /**
- * Unit Of Work
+ * Entity Context
  */
 class EntityContext implements IUnitOfWork
 {
@@ -48,10 +48,10 @@ class EntityContext implements IUnitOfWork
 	/**
 	 * Constructeur
 	 */
-  public function __construct($config)
+  public function __construct(Connection $connection)
   {
     //$this->_config = $config;
-    $this->_mapper = new Persister($config);
+    $this->_mapper = new Persister($connection);
   }
   
   public function getMapper()
