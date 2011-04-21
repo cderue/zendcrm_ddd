@@ -31,7 +31,7 @@
  */
 namespace Application\Data\Repository;
 use \Application\Domain\Object as DomainObject;
-use \Application\Domain\Repository as Repository;
+use \Application\Domain\Contract as Repository;
 use \MongoEntity as Mongo;
 
 /**
@@ -53,15 +53,6 @@ class OpportunityRepository implements Repository\IOpportunityRepository
 	}
 	
 	/**
-	 * Sélectionner toutes les opportunités
-	 */
-  public function getOpportunities()
-	{
-		$query = new Mongo\QueryObject($this->_context);
-		return $query->select('Application\Domain\Object\Opportunity');
-	}
-	
-	/**
 	 * Sélectionner une opportunité par son identifiant
 	 */
   public function getOpportunityById($id)
@@ -77,7 +68,9 @@ class OpportunityRepository implements Repository\IOpportunityRepository
 	 */
 	public function getOpportunitiesByCreatorId($creatorId)
 	{
-		
+		$query = new \Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
+								 ->select('Application\Domain\Object\Opportunity');
 	}
 	
 	/**

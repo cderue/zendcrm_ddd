@@ -86,7 +86,7 @@ class Bootstrap extends \Zend\Application\Bootstrap
     $options['frontendOptions']['lifetime'] = $config->cache->frontEndOptions->lifetime;
     $options['backend'] = $config->cache->backEnd;
     $options['backendOptions']['lifetime'] = $config->cache->backEndOptions->lifetime;
-    $front->registerPlugin(new \Zendcrm\Controller\Plugin\Cache($options), 10);*/
+    $front->registerPlugin(new Application\Plugin\Cache($options), 10);*/
   }
   
   /**

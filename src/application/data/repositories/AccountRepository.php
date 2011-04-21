@@ -31,7 +31,7 @@
  */
 namespace Application\Data\Repository;
 use \Application\Domain\Object as DomainObject;
-use \Application\Domain\Repository as Repository;
+use \Application\Domain\Contract as Repository;
 use \MongoEntity as Mongo;
 
 /**
@@ -53,15 +53,6 @@ class AccountRepository implements Repository\IAccountRepository
 	}
 	
 	/**
-	 * Sélectionner tous les comptes clients
-	 */
-  public function getAccounts()
-	{	
-		$query = new Mongo\QueryObject($this->_context);
-		return $query->select('Application\Domain\Object\Account');
-	}
-	
-	/**
 	 * Sélectionner un compte client par son identifiant
 	 */
   public function getAccountById($id)
@@ -77,9 +68,9 @@ class AccountRepository implements Repository\IAccountRepository
 	 */
 	public function getAccountsByCreatorId($creatorId)
 	{
-		$query = new \Mongo\QueryObject('Account');
-		$query->addCriteria(new SimpleCriteria(array('_owner' => '_id'), '==', $ownerId));
-		$account = $query->select();
+		$query = new \Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
+								 ->select('Application\Domain\Object\Account');
 	}
 	
 	/**

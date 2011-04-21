@@ -39,8 +39,10 @@ class Contact extends AbstractPerson
 {
 	/**
 	 * Compte client
+	 * 
 	 * @var Application\Domain\Object\Account
 	 * @ReferenceOne(collection="accounts")
+	 * @Validator [account: 'required']
 	 */
 	protected $_account;
 	/**

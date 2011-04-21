@@ -39,15 +39,20 @@ abstract class AbstractPerson extends AbstractDomainEntity
 {
   /**
    * Prénom
-   * @Field(map="firstname")
+   * 
+   * @Field [map: 'firstname')
    */  
   protected $_firstname;
   /**
    * Nom
+   * 
+   * @Validator [lastname: 'required']
    */
   protected $_lastname;
   /**
    * Courriel
+   * 
+   * @Validator [email: 'email']
    */
   protected $_email;
   /**

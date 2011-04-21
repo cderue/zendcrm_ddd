@@ -1,25 +1,37 @@
 <?php
 
 namespace Application\Data\Factory;
-use Application\Domain\Factory as Factory;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract\IContactFactory;
+use Application\Domain\Object as DomainObject;
 
-class ContactFactory implements Factory\IContactFactory
+class ContactFactory implements IContactFactory
 {
-	private $_leadRepository = null;
-	
-	public function __construct(Repository\ILeadRepository $leadRepository)
+	public static function createContact(
+		$firstname,
+		$lastname,
+		Account $account,
+		$jobTitle,
+		$department,
+		$email,
+		$phoneOffice,
+		$phoneMobile,
+		$phoneFax,
+		Address $address,
+		User $creator)
 	{
-		
-	}
-	
-	public function createContact(array $options)
-	{
-		
-	}
-	
-	private function _checkOptions(array $options)
-	{
-		
+		$contact = new DomainObject\Contact();
+		$contact->setFirstname($firstname)
+						->setLastname($lastname)
+						->setAccount($account)
+						->setJobTitle($jobTitle)
+						->setDepartment($department)
+						->setPhoneOffice($phoneOffice)
+						->setPhoneMobile($phoneMobile)
+						->setPhoneFax($phoneFax)
+						->setAdsress($address)
+						->setCreator($user)
+						->setCreationDate(new \Zend\Date\Date());
+						
+		return $contact;
 	}
 }

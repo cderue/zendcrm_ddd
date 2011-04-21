@@ -31,7 +31,7 @@
  */
 namespace Application\Data\Repository;
 use \Application\Domain\Object as DomainObject;
-use \Application\Domain\Repository as Repository;
+use \Application\Domain\Contract as Repository;
 use \MongoEntity as Mongo;
 
 /**
@@ -55,11 +55,11 @@ class ContactRepository implements Repository\IContactRepository
 	/**
 	 * Sélectionner tous les contacts
 	 */
-  public function getContacts()
+  /*public function getContacts()
 	{
 		$query = new Mongo\QueryObject($this->_context);
 		return $query->select('Application\Domain\Object\Contact');
-	}
+	}*/
 	
 	/**
 	 * Sélectionner un contact par son identifiant
@@ -77,7 +77,9 @@ class ContactRepository implements Repository\IContactRepository
 	 */
 	public function getContactsByCreatorId($creatorId)
 	{
-		
+		$query = new \Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
+								 ->select('Application\Domain\Object\Contact');
 	}
 	
 	/**

@@ -1,18 +1,39 @@
 <?php
 
 namespace Application\Data\Factory;
-use Application\Domain\Factory as Factory;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract\ILeadFactory;
+use Application\Domain\Object as DomainObject;
 
 class LeadFactory implements ILeadFactory
 {
-	public function createLead(array $options)
+	public static function createLead(
+		$firstname,
+		$lastname,
+		Account $account,
+		$jobTitle,
+		$department,
+		$email,
+		$phoneOffice,
+		$phoneMobile,
+		$phoneFax,
+		Address $address,
+		$status,
+		User $creator)
 	{
-		
-	}
-	
-	private function _checkOptions(array $options)
-	{
-		
+		$lead = new DomainObject\Lead();
+		$lead->setFirstname($firstname)
+						->setLastname($lastname)
+						->setAccount($account)
+						->setJobTitle($jobTitle)
+						->setDepartment($department)
+						->setPhoneOffice($phoneOffice)
+						->setPhoneMobile($phoneMobile)
+						->setPhoneFax($phoneFax)
+						->setAdsress($address)
+						->setStatus($status)
+						->setCreator($creator)
+						->setCreationDate(new \Zend\Date\Date());
+						
+		return $lead;
 	}
 }

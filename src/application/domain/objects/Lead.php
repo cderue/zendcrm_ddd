@@ -33,7 +33,7 @@ namespace Application\Domain\Object;
 
 /**
  * Prospect
- * @Entity(collection="leads")
+ * @Entity [collection:"leads"]
  */
 class Lead extends Contact
 {

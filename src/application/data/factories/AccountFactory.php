@@ -1,23 +1,26 @@
 <?php
 
 namespace Application\Data\Factory;
-use Application\Domain\Factory as Factory;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract\IAccountFactory;
+use Application\Domain\Object as DomainObject;
 
-class AccountFactory implements Factory\IAccountFactory
+class AccountFactory implements IAccountFactory
 {
-	public function __construct()
+	public static function createAccount(
+		$name, 
+		$phoneOffice, 
+		$phoneFax, 
+		DomainObject\Address $address, 
+		DomainObject\User $creator)
 	{
-		
-	}
-	
-	public function createAccount(array $options)
-	{
-		
-	}
-	
-	private function _checkOptions(array $options)
-	{
-		
+		$account = new DomainObject\Account();
+		$account->setName($name)
+						->setPhoneOffice($phoneOffice)
+						->setPhoneFax($phoneFax)
+						->setAddress($address)
+						->setCreator($creator)
+						->setCreationDate(new \Zend\Date\Date());
+						
+		return $account;
 	}
 }

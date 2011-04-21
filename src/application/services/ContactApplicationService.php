@@ -31,10 +31,10 @@
  */
 namespace Application\Service;
 use Application\Domain\Object as DomainObject;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract as Repository;
 
 /**
- * Service du domaine pour la gestion des contacts
+ * Service d'application pour la gestion des contacts
  */
 class ContactApplicationService implements IContactApplicationService
 {
@@ -49,6 +49,11 @@ class ContactApplicationService implements IContactApplicationService
 	public function __construct(Repository\IContactRepository $repository)
 	{
 		$this->_repository = $repository;
+	}
+	
+	public function validateContact(array $postContact)
+	{
+		
 	}
 	
 	/**

@@ -40,5 +40,63 @@
     'url'    => '/contact/create'
   );
   $this->broker('layout')->getLayout()->assign('footer', $options);
-  echo $this->form;
 ?>
+<form method="post" action="/contact/create">
+	<div data-role="fieldcontain">
+    <label for="firstname">Prénom :</label>
+    <input type="text" name="firstname" id="firstname" value="" />
+	</div>
+	<div data-role="fieldcontain">
+    <label for="lastname">Nom :</label>
+    <input type="text" name="lastname" id="lastname" value="" required />
+	</div>
+	<div data-role="fieldcontain">
+    <label for="society">Société :</label>
+    <input type="text" name="society" id="society" value="" required />
+	</div>
+	<div data-role="fieldcontain">
+    <label for="job_title">Fonction :</label>
+    <input type="text" name="job_title" id="job_title" value="" required />
+	</div>
+	<div data-role="fieldcontain">
+    <label for="department">Département :</label>
+    <input type="text" name="department" id="department" value="" required />
+	</div>
+	<div data-role="fieldcontain">
+    <label for="email">Courriel :</label>
+    <input type="email" name="email" id="email" value="" required />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="phone_office">Tel. bureau :</label>
+	    <input type="tel" name="phone_office" id="phone_office" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="phone_mobile">Tel. mobile :</label>
+	    <input type="tel" name="phone_mobile" id="phone_mobile" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="phone_fax">Tel. fax :</label>
+	    <input type="tel" name="phone_fax" id="phone_fax" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="street">Rue :</label>
+	    <input type="text" name="street" id="street" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="city">Ville :</label>
+	    <input type="text" name="city" id="city" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="state">Etat :</label>
+	    <input type="text" name="state" id="state" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="post_code">Code postal :</label>
+	    <input type="text" name="post_code" id="post_code" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+	    <label for="country">Pays :</label>
+	    <input type="text" name="country" id="country" value=""  />
+	</div>
+</form>
+

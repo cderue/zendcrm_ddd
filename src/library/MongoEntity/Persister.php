@@ -142,21 +142,20 @@ class Persister
   
   /**
    * 
-   * Enter description here ...
-   */
-  private function _toArray()
-  {
-  	
-  }
-  
-  /**
-   * 
    */
   private function _toEntity(array $document, $entity)
   {
-  
     $document['id'] = $document['_id']->__toString();
     unset($document['_id']);
+    foreach ($document as $field) {
+    	if (is_array($field) && array_key_exists('$id', $field) && array_key_exists('$ref', $field)) {
+    		$collection = $this->_map[get_class($entity)];
+    		$field = $this->_driver->$collection->getDBRef($field);
+    	} else if (is_array($field)) {
+    		//$this->_toEntity($field, $entity);
+    	} else {
+    	}
+    }
     $entity->setOptions($document);
 
     return $entity;

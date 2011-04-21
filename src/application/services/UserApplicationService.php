@@ -31,10 +31,11 @@
  */
 namespace Application\Service;
 use Application\Domain\Object as DomainObject;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract as Repository;
+use \Zend\Validator as Validator;
 
 /**
- * Service du domaine pour la gestion des utilisateurs
+ * Service d'application pour la gestion des utilisateurs
  */
 class UserApplicationService implements IUserApplicationService
 {
@@ -49,6 +50,26 @@ class UserApplicationService implements IUserApplicationService
 	public function __construct(Repository\IUserRepository $repository)
 	{
 		$this->_repository = $repository;	
+	}
+	
+	public function validateUser(array $postUser)
+	{
+		if (!Validator\StaticValidator::execute($postUser['lastname'], 'NotEmpty')) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['email'], 'EmailAddress')) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['login'], 'NotEmpty')) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['role'], 'InArray', array('ADM', 'STD'))) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['is_active'], 'InArray', array(0, 1))) {
+			
+		}
+		
 	}
 	
 	/**

@@ -32,13 +32,16 @@
 namespace Application\Domain\Object;
 /**
  * Compte client
- * @Entity(collection="accounts")
+ * 
+ * @Entity [collection: 'accounts']
  */
 class Account extends AbstractDomainEntity
 {
   /**
    * Nom
+   * 
    * @var string
+   * @Validator [name: 'required']
    */
 	protected $_name;
   /**

@@ -31,10 +31,10 @@
  */
 namespace Application\Service;
 use Application\Domain\Object as DomainObject;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract as Repository;
 
 /**
- * Service du domaine pour la gestion des opportunités
+ * Service d'application pour la gestion des opportunités
  */
 class OpportunityApplicationService implements IOpportunityApplicationService
 {
@@ -49,6 +49,22 @@ class OpportunityApplicationService implements IOpportunityApplicationService
 	public function __construct(Repository\IOpportunityRepository $repository)
 	{
 		$this->_repository = $repository;
+	}
+	
+	public function validateAOpportunity(array $postOpportunity)
+	{
+		if (!Validator\StaticValidator::execute($postUser['name'], 'NotEmpty')) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['account'], 'Alnum')) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['date_closed'], 'Date')) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['status'], 'InArray', array())) {
+			
+		}
 	}
 	
 	/**

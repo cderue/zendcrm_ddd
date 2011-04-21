@@ -1,17 +1,21 @@
 <?php
 
 namespace Application\Data\Factory;
-use Application\Domain\Factory as Factory;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract\IUserFactory;
+use Application\Domain\Object as DomainObject;
 
 class UserFactory implements IUserFactory
 {
-	public function createUser(array $options)
-	{
-		
-	}
-	
-	private function _checkOptions(array $options)
+	public static function createUser(
+		$firstname,
+		$lastname,
+		$email,
+		$phoneOffice,
+		$phoneMobile,
+		$phoneFax,
+		$login,
+		$role,
+		$isActive)
 	{
 		
 	}

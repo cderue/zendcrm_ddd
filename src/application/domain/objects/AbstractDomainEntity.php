@@ -30,31 +30,40 @@
  * @namespace
  */
 namespace Application\Domain\Object;
+use Application\Domain\Contract\IValidator;
+use \Zend\Validator as Validator;
 
 /**
  * Classe abstraite de base pour toutes les entités du modèle de domaine
  * @Entity
  */
-abstract class AbstractDomainEntity
+abstract class AbstractDomainEntity implements IValidator
 {
 	/**
 	 * Identifiant unique
+	 * 
 	 * @Id
 	 */
 	protected $_id = null;
 	/**
 	 * Date de création
+	 * 
+	 * @Field [map: "creation_date"]
 	 */
 	protected $_creationDate = null;
 	/**
 	 * Créateur
-	 * @ReferenceOne(collection="users")
+	 * 
+	 * @Field [map: "creator"]
+	 * @DBRef 
 	 */
 	protected $_creator = null;
 	/**
-	 * Formulaire rattaché
+	 * 
+	 * Enter description here ...
+	 * @var unknown_type
 	 */
-	protected $_form = null;
+	protected $_messages = array();
 	
 	/**
 	 * Constructeur
@@ -64,9 +73,16 @@ abstract class AbstractDomainEntity
 		if (is_array($options)) {
 			$this->setOptions($options);
 		}
-		$models = explode('\\', get_class($this));
-		//$class = '\Application\Form\\' . $models[2] . 'Form';
-		//$this->_form = new $class();
+		/*$models = explode('\\', get_class($this));
+		$reflexion = new \Zend\Reflection\ReflectionClass(get_class($this));
+		$properties = $reflexion->getProperties();
+		foreach ($properties as $prop) {
+			$doc = $prop->getDocComment();
+			$tag = $doc->getTag('Id');
+			if ($tag !== false) {
+				echo $tag->description;
+			}
+		}*/
 	}
 	
 	public function __set($name, $value)
@@ -143,20 +159,8 @@ abstract class AbstractDomainEntity
 	 * @param mixed $creator
 	 */
 	public function setCreator($creator)
-	{
-		/*
-		if (null !== $creator && !$creator instanceof User && !is_array($creator)) {
-      throw new \Exception('');
-    }
-      
-    if ($creator instanceof User) {  
-      $this->_creator = $creator;
-    }
-    if (is_array($creator)) {
-      $this->_creator = new User($creator);  
-    }*/
-		
-		$this->_creator = (string) $creator;
+	{	
+		$this->_creator = $creator;
 		return $this;
 	}
 	
@@ -171,8 +175,15 @@ abstract class AbstractDomainEntity
 	/**
 	 * Valider les données entrantes
 	 */
-	public function isValid($data)
+	public function isValid()
 	{
-		return $this->_form->isValid($data);
+	
+		
+		return true;
+	}
+	
+	public function getErrors()
+	{
+		return true;
 	}
 }

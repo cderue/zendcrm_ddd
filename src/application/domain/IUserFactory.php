@@ -3,7 +3,7 @@
 /**
  * @namespace
  */
-namespace Application\Domain\Factory;
+namespace Application\Domain\Contract;
 use \Application\Domain\Object as DomainObject;
 
 interface IUserFactory

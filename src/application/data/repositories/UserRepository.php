@@ -31,7 +31,7 @@
  */
 namespace Application\Data\Repository;
 use \Application\Domain\Object as DomainObject;
-use \Application\Domain\Repository as Repository;
+use \Application\Domain\Contract as Repository;
 use \MongoEntity as Mongo;
 
 /**
@@ -55,11 +55,11 @@ class UserRepository implements Repository\IUserRepository
 	/**
 	 * Sélectionner tous les utilisateurs
 	 */
-  public function getUsers()
+  /*public function getUsers()
 	{
 		$query = new Mongo\QueryObject($this->_context);
 		return $query->select('Application\Domain\Object\User');
-	}
+	}*/
 	
 	/**
 	 * Sélectionner un utilisateur par son identifiant
@@ -77,7 +77,9 @@ class UserRepository implements Repository\IUserRepository
 	 */
 	public function getUsersByCreatorId($creatorId)
 	{
-		
+		$query = new \Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
+								 ->select('Application\Domain\Object\User');
 	}
 	
 	/**

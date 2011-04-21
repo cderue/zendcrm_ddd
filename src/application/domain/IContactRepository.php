@@ -29,7 +29,7 @@
 /**
  * @namespace
  */
-namespace Application\Domain\Repository;
+namespace Application\Domain\Contract;
 use \Application\Domain\Object as DomainObject;
 
 interface IContactRepository

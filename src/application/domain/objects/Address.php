@@ -30,11 +30,14 @@
  * @namespace
  */
 namespace Application\Domain\Object;
+use Application\Domain\IValidator;
+use \Zend\Validator as Validator;
+
 /**
  * Adresse
  * @EmbeddedEntity
  */
-class Address
+class Address implements IValidator
 {
   /**
    * Rue
@@ -61,6 +64,11 @@ class Address
    * @var string
    */
 	protected $_country;
+	/**
+	 * Erreurs de validation
+	 * @var array
+	 */
+	protected $_errors = array();
   
 	/**
 	 * Constructeur
@@ -105,6 +113,8 @@ class Address
   
   /**
    * Obtenir le code postal
+   * 
+   * @Validator [zipcode: 'PostCode']
    */
 	public function getZipCode()
   {
@@ -117,5 +127,22 @@ class Address
 	public function getCountry()
   {
   	return $this->_country;
+  }
+  
+  /**
+   * (non-PHPdoc)
+   * @see Application\Domain.IValidator::validate()
+   */
+  public function validate()
+  {
+  	$validator = new Validator\StaticValidator();
+  	if (!$validator->isValid($this->_zipCode,	'PostCode', array(
+      'locale' => 'fr_FR', 
+      'format' => '((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B))[0-9]{3}'))) {
+  		$this->_errors = $validator->getErrors();
+  		return false;
+  	}
+  	
+  	return true;
   }
 }

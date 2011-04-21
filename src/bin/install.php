@@ -48,11 +48,13 @@ try {
 		'password_hash' => md5('admin'),
 		'role' 					=> 'ADM',
 		'is_active' 		=> true,
-		'creator' 			=> 'admin' 
+		'creator' 			=> null 
 	);
 	
 	// Sauvegarde l'administrateur
 	$db->users->insert($admin);
+	$admin = $db->users->findOne(array('login' => 'admin'));
+	$adminRef = $db->users->createDBRef($admin);
 	
 	// Crée un utilisateur normal
 	$user = array(
@@ -63,11 +65,13 @@ try {
 		'password_hash' => md5('cderue'),
 		'role' 					=> 'STD',
 		'is_active' 		=> true,
-		'creator' 			=> 'admin'
+		'creator' 			=> $adminRef
 	);
 	
 	// Sauvegarde l'utilisateur normal
 	$db->users->insert($user);
+	$user = $db->users->findOne(array('login' => 'cderue'));
+	$userRef = $db->users->createDBRef($user);
 	
 	// Crée un compte client
 	$account = array(
@@ -78,13 +82,14 @@ try {
 			'city' => 'Lyon',
 			'country' => 'France'
 		),
-		'creator' => 'admin'
+		'creator' => $userRef
 	);
 	
 	// Sauvegarde le compte client
 	$db->accounts->insert($account);
 	$account = $db->accounts->findOne(array('name' => 'IT Services'));
 	$accountRef = $db->accounts->createDBRef($account);
+	
 	
 	// Crée un premier prospect
 	$leadOne = array(
@@ -94,7 +99,7 @@ try {
 		'account' 		=> 'Pharmacie du Grand Vallon',
 		'phoneOffice' => '0418228990',
 		'status' 			=> '1',
-		'creator' 		=> 'admin'
+		'creator' 		=> $userRef
 	);
 	
 	// Crée un autre prospect
@@ -105,7 +110,7 @@ try {
 		'account'			 => 'IT Services',
 		'phone_office' => '0116278001',
 		'status' 			 => '1',
-		'creator' 		 => 'admin'
+		'creator' 		 => $userRef
 	);
 	
 	// Sauvegarde les deux prospects
@@ -120,7 +125,7 @@ try {
 		'job_title' 	 => 'Directeur',
 		'email' 			 => 'bernard.conte@itservices.com',
 		'phone_office' => '0116278004',
-		'creator' 		 => 'admin'
+		'creator' 		 => $userRef
 	);
 	
 	// Sauvegarde le contact
@@ -137,7 +142,7 @@ try {
 		'amount' => 200000,
 		'date_closed' => '28/11/2011',
 		'contact' => $contactRef,
-		'creator' => 'admin'
+		'creator' => $userRef
 	);
 	
 	// Sauvegarde l'opportunité

@@ -1,28 +1,32 @@
 <?php
 
 namespace Application\Data\Factory;
-use Application\Domain\Factory as Factory;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract\IOpportunityFactory;
+use Application\Domain\Object as DomainObject;
 
 class OpportunityFactory implements IOpportunityFactory
 {
-	private $_accountRepository = null;
-	private $_contactRepository = null;
-	
-	public function __construct(
-		Repository\IAccountRepository $accountRepository,
-		Repository\IContactRepository $contactRepository)
+	public static function createOpportunity(
+		$name,
+		DomainObject\Account $account,
+		$amount,
+		$dateClosed,
+		$probability,
+		$status,
+		DomainObject\Contact $contact,
+		DomainObject\User $creator)
 	{
-		
-	}
-	
-	public function createOpportunity(array $options)
-	{
-		
-	}
-	
-	private function _checkOptions(array $options)
-	{
-		
+		$opportunity = new DomainObject\Opportunity();
+		$opportunity->setName($name)
+								->setAccount($account)
+								->setAmount($amount)
+								->setDateClosed($dateClosed)
+								->setProbability($probability)
+								->setStatus($status)
+								->setContact($contact)
+								->setCreator($creator)
+								->setCreationDate(new \Zend\Date\Date());
+								
+		return $opportunity;
 	}
 }

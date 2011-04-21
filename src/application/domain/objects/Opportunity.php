@@ -44,18 +44,24 @@ class Opportunity extends AbstractDomainEntity
   protected $_name;
   /**
    * Compte client
+   * 
    * @var mixed (\Application\Domain\Object\Acccout | array)
    * @ReferenceOne(collection="accounts")
+   * @Validator [account: 'required']
    */
   protected $_account;
   /**
    * Montant
+   * 
    * @var float
+   * @Validator [amount: 'required']
    */
   protected $_amount;
   /**
    * Date de clôture
+   * 
    * @var string
+   * @Validator [date_closed: 'required']
    */
   protected $_dateClosed;
   /**

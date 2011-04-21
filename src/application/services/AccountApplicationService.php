@@ -31,10 +31,10 @@
  */
 namespace Application\Service;
 use Application\Domain\Object as DomainObject;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract as Repository;
 
 /**
- * Service du domaine pour la gestion des comptes clients
+ * Service d'application pour la gestion des comptes clients
  */
 class AccountApplicationService implements IAccountApplicationService
 {
@@ -49,6 +49,13 @@ class AccountApplicationService implements IAccountApplicationService
 	public function __construct(Repository\IAccountRepository $repository)
 	{
 		$this->_repository = $repository;
+	}
+	
+	public function validateAccount(array $postAccount)
+	{
+		if (!Validator\StaticValidator::execute($postUser['name'], 'NotEmpty')) {
+			
+		}
 	}
 	
 	/**

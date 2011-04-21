@@ -33,10 +33,10 @@ namespace Application\Service;
 use Application\Domain;
 use Application\Domain\Object as DomainObject;
 use Application\Domain\Service as DomainService;
-use Application\Domain\Repository as Repository;
+use Application\Domain\Contract as Repository;
 
 /**
- * Service du domaine pour la gestion des prospects
+ * Service d'application pour la gestion des prospects
  */
 class LeadApplicationService implements ILeadApplicationService
 {
@@ -50,6 +50,8 @@ class LeadApplicationService implements ILeadApplicationService
    */  
   private $_repository = null;
   
+  private $_errors = array();
+  
   /**
    * Constructeur
    */
@@ -58,6 +60,20 @@ class LeadApplicationService implements ILeadApplicationService
     $this->_leadDomainService = $leadDomainService;
   	$this->_repository = $repository;
   }
+  
+	public function validateLead(array $postLead)
+	{
+		if (!Validator\StaticValidator::execute($postUser['name'], 'NotEmpty')) {
+			
+		}
+		if (!Validator\StaticValidator::execute($postUser['account'], 'NotEmpty')) {
+			
+		}
+		if (count($this->_errors) == 0) {
+			return true;
+		}
+		return false;
+	}
   
 	/**
 	 * Sélectionner tous les prospects

@@ -42,9 +42,10 @@ $loader = new \Zend\Loader\StandardAutoloader();
 $loader->registerNamespace('Zend', __DIR__ . '/../library/Zend'); 
 $loader->registerNamespace('MongoEntity', __DIR__ . '/../library/MongoEntity'); 
 $loader->registerNamespace('Application\Data\Repository', __DIR__ . '/../application/data/repositories');
-$loader->registerNamespace('Application\Domain\Repository', __DIR__ . '/../application/domain');
+$loader->registerNamespace('Application\Domain\Contract', __DIR__ . '/../application/domain');
 $loader->registerNamespace('Application\Domain\Object', __DIR__ . '/../application/domain/objects');
 $loader->registerNamespace('Application\Domain\Service', __DIR__ . '/../application/domain/services');
+//$loader->registerNamespace('Application\Domain\Validator', __DIR__ . '/../application/domain/services');
 /** TO START AUTOLOADING */ 
 $loader->register(); 
 

@@ -31,7 +31,7 @@
  */
 namespace Application\Data\Repository;
 use \Application\Domain\Object as DomainObject;
-use \Application\Domain\Repository as Repository;
+use \Application\Domain\Contract as Repository;
 use \MongoEntity as Mongo;
 
 /**
@@ -79,7 +79,9 @@ class LeadRepository implements Repository\ILeadRepository
 	 */
 	public function getLeadsByCreatorId($creatorId)
 	{
-		$query = new Mongo\QueryObject($this->_context);
+		$query = new \Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
+								 ->select('Application\Domain\Object\Lead');
 	}
 	
 	/**
