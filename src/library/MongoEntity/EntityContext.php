@@ -51,7 +51,8 @@ class EntityContext implements IUnitOfWork
   public function __construct(Connection $connection)
   {
     //$this->_config = $config;
-    $this->_mapper = new Persister($connection);
+    
+    $this->_mapper = new Persister('../application/configs/mapping.xml', $connection);
   }
   
   public function getMapper()

@@ -85,6 +85,14 @@ class Driver
       return $result;
   }
   
+  public function getDBRef($collection, array $dbRef)
+  {
+  	$result = $this->getConnection()->$collection->getDBRef($dbRef);
+  	var_dump($result);
+  	
+  	return $result;
+  }
+  
   public function dropDatabase()
   {
     $this->getConnection()->drop();

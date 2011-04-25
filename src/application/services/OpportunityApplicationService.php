@@ -70,14 +70,14 @@ class OpportunityApplicationService implements IOpportunityApplicationService
 	/**
 	 * Sélectionner toutes les opportunités
 	 */
-	public function getOpportunities()
+	/*public function getOpportunities()
 	{
 		try {
 			return $this->_repository->getOpportunities();
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
-	}
+	}*/
 	
 	/**
 	 * Sélectionner une opportunité par son identifiant

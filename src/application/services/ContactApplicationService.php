@@ -59,14 +59,14 @@ class ContactApplicationService implements IContactApplicationService
 	/**
 	 * Sélectionner tous les contacts
 	 */
-	public function getContacts()
+	/*public function getContacts()
 	{
 		try {
 			return $this->_repository->getContacts();
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
-	}
+	}*/
 	
 	/**
 	 * Sélectionner un contact par son identifiant
@@ -87,7 +87,7 @@ class ContactApplicationService implements IContactApplicationService
 	public function getContactsByCreatorId($creatorId)
 	{
 		try {
-			return $this->_repository->getContactByCreatorId($creatorId);
+			return $this->_repository->getContactsByCreatorId($creatorId);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}

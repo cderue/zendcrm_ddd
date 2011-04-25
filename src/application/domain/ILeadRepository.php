@@ -34,7 +34,7 @@ use \Application\Domain\Object as DomainObject;
 
 interface ILeadRepository
 {
-  public function getLeads();
+  //public function getLeads();
   public function getLeadById($id);
 	public function getLeadsByCreatorId($creatorId);
   public function addLead(DomainObject\Lead $lead);

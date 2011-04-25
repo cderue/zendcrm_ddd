@@ -30,7 +30,7 @@
  * @namespace
  */
 namespace Application\Domain\Object;
-use Application\Domain\IValidator;
+use Application\Domain\Contract\IValidator;
 use \Zend\Validator as Validator;
 
 /**
@@ -145,4 +145,19 @@ class Address implements IValidator
   	
   	return true;
   }
+  
+	/**
+	 * Valider les données entrantes
+	 */
+	public function isValid()
+	{
+	
+		
+		return true;
+	}
+	
+	public function getErrors()
+	{
+		return true;
+	}
 }

@@ -65,7 +65,7 @@ class User extends AbstractPerson
    * Rôle administrateur ou standard
    * @var boolean
    */
-  protected $_isAdmin;
+  //protected $_isAdmin;
 
   /**
    * Affecter le login
@@ -148,19 +148,19 @@ class User extends AbstractPerson
    * Affecter le rôle
    * @param boolean $isAdmin
    */
-  public function setIsAdmin($isAdmin)
+  /*public function setIsAdmin($isAdmin)
   {
     $this->_isAdmin = $isAdmin;
     return $this;
-  }
+  }*/
 
   /**
     * Obtenir le rôle
     */
-  public function getIsAdmin()
+  /*public function getIsAdmin()
   {
     return $this->_isAdmin;
-  }
+  }*/
   
   /**
    * Vérifier si le login existe déjà

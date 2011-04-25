@@ -77,8 +77,8 @@ class ContactRepository implements Repository\IContactRepository
 	 */
 	public function getContactsByCreatorId($creatorId)
 	{
-		$query = new \Mongo\QueryObject($this->_context);
-		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new Mongo\SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
 								 ->select('Application\Domain\Object\Contact');
 	}
 	

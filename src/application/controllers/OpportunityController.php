@@ -29,10 +29,10 @@
 /**
  * @namespace
  */
-use Application\Form as ApplicationForm;
-use Application\Service as ApplicationService;
-use ApplicationModel as ApplicationModel;
-use Application\Model\Repository as ApplicationRepository;  
+use Application\Form as Form;
+use Application\Service as Service;
+use Application\Domain\Object as DomainObject;
+use Application\Repository as Repository;
  
 /**
  * Contrôleur d'action pour la gestion des opportunités
@@ -49,7 +49,7 @@ class OpportunityController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('opportunity_application'));
+  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('opportunity.application'));
   }
   
 	public function setApplicationService(Service\IOpportunityApplicationService $service)
@@ -70,7 +70,9 @@ class OpportunityController extends \Zend\Controller\Action
    */
   public function listAction()
   {
-    $opportunities = $this->_service->getOpportunities(); 
+  	$auth = new \Zend\Authentication\AuthenticationService();
+  	$identity = $auth->getIdentity();
+  	$opportunities = $this->_service->getOpportunitiesByCreatorId($identity->getId()); 
     $this->view->opportunities = $opportunities;
   }
     

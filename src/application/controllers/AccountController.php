@@ -31,7 +31,8 @@
  */
 use Application\Form as Form;
 use Application\Service as Service;
-use Application\Domain\Repository as Repository;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+use Application\Domain\Object as DomainObject;
+use Application\Repository as Repository;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 
 /**
  * Contrôleur d'action pour la gestion des comptes clients
@@ -48,7 +49,7 @@ class AccountController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('account_application'));
+  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('account.application'));
   }
   
 public function setApplicationService(Service\IAccountApplicationService $service)
@@ -69,7 +70,9 @@ public function setApplicationService(Service\IAccountApplicationService $servic
    */
   public function listAction()
   {
-    $accounts = $this->_service->getAccounts();   
+    $auth = new \Zend\Authentication\AuthenticationService();
+    $identity = $auth->getIdentity();
+  	$accounts = $this->_service->getAccountsByCreatorId($identity->getId());   
     $this->view->accounts = $accounts;
   }
     

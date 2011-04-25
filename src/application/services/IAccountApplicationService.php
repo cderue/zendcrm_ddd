@@ -10,7 +10,7 @@ use \Application\Domain\Object as DomainObject;
  */
 interface IAccountApplicationService
 {
-	public function getAccounts();
+	//public function getAccounts();
 	public function getAccountById($id);
 	public function getAccountsByCreatorId($creatorId);
 	public function addAccount(DomainObject\Account $account);

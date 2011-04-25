@@ -34,7 +34,7 @@ use \Application\Domain\Object as DomainObject;
 
 interface IAccountRepository
 {
-  public function getAccounts();
+  //public function getAccounts();
   public function getAccountById($id);
 	public function getAccountsByCreatorId($creatorId);
   public function addAccount(DomainObject\Account $account);

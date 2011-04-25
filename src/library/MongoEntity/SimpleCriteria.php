@@ -37,8 +37,19 @@ class SimpleCriteria implements ICriteria
 		$this->_value = $value;
 	}
 	
+	public function getFirstOperand()
+	{
+		
+	}
+	
 	public function getExpression()
 	{
-		return "(this.$this->_field" . " " . "$this->_operator" . " " . "$this->_value)";
+		if (is_array($this->_field)) {
+			$keys = array_keys($this->_field);
+			$this->_field = $keys[0] . '.' . $this->_field[$keys[0]];
+		}
+		//\Zend\Debug::dump("(this.$this->_field" . " " . "$this->_operator" . " " . "'$this->_value')");
+		//exit();
+		return "(this.$this->_field" . " " . "$this->_operator" . " " . "'$this->_value')";
 	}
 }

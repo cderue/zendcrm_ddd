@@ -33,6 +33,7 @@ namespace Application\Service;
 use Application\Domain\Object as DomainObject;
 use Application\Domain\Contract as Repository;
 use \Zend\Validator as Validator;
+use \Zend\Authentication as Authentication;
 
 /**
  * Service d'application pour la gestion des utilisateurs
@@ -97,11 +98,24 @@ class UserApplicationService implements IUserApplicationService
 	}
 	
 	/**
-	 * Sélectionner les utilisateurs par l'identifiant du propriétaire
+	 * Authentifier un utilisateur
 	 */
-	public function getUsersByCreatorId($creatorId)
+	public function authenticate($login, $password)
 	{
-		
+		try {
+			$user = $this->_repository->getUserByLoginAndPassword($login, $password);
+			if (null !== $user) {
+				$storage = new Authentication\Storage\Session();
+      	$auth = new Authentication\AuthenticationService($storage); 
+      	$result = new Authentication\Result(Authentication\Result::SUCCESS, $user);
+      	$auth->getStorage()->write($result->getIdentity());
+      } else {
+				$result = new Authentication\Result(Authentication\Result::FAILURE, null);
+			}
+			return $result;
+		} catch (\Exception $ex) {
+			// Zend_Log
+		}
 	}
 	
 	/**

@@ -29,9 +29,10 @@
 /**
  * @namespace
  */
-use Application\Service\IContactApplicationService;
-use Application\Form as ApplicationForm;
-use Application\Service as ApplicationService; 
+use Application\Form as Form;
+use Application\Service as Service;
+use Application\Domain\Object as DomainObject;
+use Application\Repository as Repository; 
 
 /**
  * Contrôleur d'action pour la gestion des contacts
@@ -48,7 +49,7 @@ class ContactController extends \Zend\Controller\Action
 	 */
 	public function init()
 	{
-		$this->setApplicationService($this->broker('DiHelper')->direct()->getService('contact_application'));
+		$this->setApplicationService($this->broker('DiHelper')->direct()->getService('contact.application'));
 	}
 	
 	public function setApplicationService(Service\IContactApplicationService $service)
@@ -69,10 +70,12 @@ class ContactController extends \Zend\Controller\Action
    */
   public function listAction()
   {
-    $contacts = $this->_service->getContacts();   
+    $auth = new \Zend\Authentication\AuthenticationService();
+    $identity = $auth->getIdentity();
+  	$contacts = $this->_service->getContactsByCreatorId($identity->getId());   
     $this->view->contacts = $contacts;
   }
-    
+  
   /**
    * Voir un contact
    */

@@ -29,10 +29,10 @@
 /**
  * @namespace
  */
-use Application\Form as ApplicationForm;
-use Application\Service as ApplicationService;
-use ApplicationModel as ApplicationModel;
-use Application\Model\Repository as ApplicationRepository; 
+use Application\Form as Form;
+use Application\Service as Service;
+use Application\Domain\Object as DomainObject;
+use Application\Repository as Repository;
  
 /**
  * Contôleur d'action pour la gestion des utilisateurs
@@ -49,7 +49,7 @@ class UserController extends \Zend\Controller\Action
    */
   public function init()
   {
-  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('user_application'));
+  	$this->setApplicationService($this->broker('DiHelper')->direct()->getService('user.application'));
   }
   
 	public function setApplicationService(Service\IUserApplicationService $service)
@@ -70,42 +70,28 @@ class UserController extends \Zend\Controller\Action
    */
   public function loginAction()
   {
-    $this->view->broker('layout')->getLayout()->disableLayout();  
-    if ($this->_request->isPost()) { 
-      $login = $_POST['login'];
-      $password = $_POST['password'];
-      
-      //
-      
-      $storage = new \Zend\Authentication\Storage\Session();
-      $auth = new \Zend\Authentication\AuthenticationService($storage); 
-        
-      $noSqlDbAdapter = \Zend\Registry::get('nosqldb');
-      
-      $authAdapter = new \Zendcrm\Authentication\Adapter\NoSqlDb();
-      $authAdapter->setNoSqlDbAdapter($noSqlDbAdapter);
-      $authAdapter->setCollectionName('users'); 
-      $authAdapter->setIdentityProperty('login');
-      $authAdapter->setCredentialProperty('password_hash'); 
-      $authAdapter->setCredentialTreatment('MD5');
-      $authAdapter->setIdentity($login);
-      $authAdapter->setCredential(md5($password));
-    
-      $authResult = $auth->authenticate($authAdapter);   
-      if ($authResult->isValid()) {
-        
-        //\Zend\Session\SessionManager::regenerateId();
-//echo $acl->isAllowed('guest', 'cms') ? 'allowed' : 'denied';
-        $this->view->broker('layout')->getLayout()->enableLayout();
-        $this->_forward('list', 'lead');
-      }
-      else
-      {
-        $this->view->form = new \Application\Form\LoginForm();  
-        $this->_forward('login', null, null, array('message' => 'Erreur d\'identifiant ou de mot de passe.'));
+    $auth = new \Zend\Authentication\AuthenticationService();
+    if ($auth->hasIdentity()) {
+    	//$this->view->broker('layout')->getLayout()->enableLayout();
+      $this->_forward('list', 'lead');
+    } else if ($this->_request->isPost()) {
+      $result = $this->_service->authenticate($_POST['login'], $_POST['password']);
+      if ($result->isValid()) {
+      	$this->_forward('list', 'lead');
       }
     } else {
-      $this->view->form = new \Application\Form\LoginForm(); 
+    	$this->view->broker('layout')->getLayout()->disableLayout();
+    	$this->view->form = new Form\LoginForm(); 	
+  	
+  		  
+    
+        
+        //\Zend\Session\SessionManager::regenerateId();
+				//echo $acl->isAllowed('guest', 'cms') ? 'allowed' : 'denied';
+        
+      //} else {
+      //  $this->view->form = new \Application\Form\LoginForm();  
+      //  $this->_forward('login', null, null, array('message' => 'Erreur d\'identifiant ou de mot de passe.'));
     }
   }
   

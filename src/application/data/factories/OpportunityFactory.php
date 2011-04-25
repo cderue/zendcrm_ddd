@@ -1,23 +1,44 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace Application\Data\Factory;
 use Application\Domain\Contract\IOpportunityFactory;
 use Application\Domain\Object as DomainObject;
 
+/**
+ * Fabrique d'opportunités
+ */
 class OpportunityFactory implements IOpportunityFactory
 {
+	/**
+	 * Fabriquer une opportunité
+	 * @param unknown_type $id
+	 * @param unknown_type $name
+	 * @param unknown_type $account
+	 * @param unknown_type $amount
+	 * @param unknown_type $dateClosed
+	 * @param unknown_type $probability
+	 * @param unknown_type $status
+	 * @param unknown_type $contact
+	 * @param unknown_type $creator
+	 * @param unknown_type $creationDate
+	 */
 	public static function createOpportunity(
+		$id = null,
 		$name,
-		DomainObject\Account $account,
+		$account,
 		$amount,
 		$dateClosed,
 		$probability,
 		$status,
-		DomainObject\Contact $contact,
-		DomainObject\User $creator)
+		$contact,
+		$creator,
+		$creationDate)
 	{
 		$opportunity = new DomainObject\Opportunity();
-		$opportunity->setName($name)
+		$opportunity->setId($id)
+								->setName($name)
 								->setAccount($account)
 								->setAmount($amount)
 								->setDateClosed($dateClosed)
@@ -25,7 +46,7 @@ class OpportunityFactory implements IOpportunityFactory
 								->setStatus($status)
 								->setContact($contact)
 								->setCreator($creator)
-								->setCreationDate(new \Zend\Date\Date());
+								->setCreationDate($creationDate);
 								
 		return $opportunity;
 	}

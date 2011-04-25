@@ -34,7 +34,7 @@ use \Application\Domain\Object as DomainObject;
 
 interface IContactRepository
 {
-  public function getContacts();
+  //public function getContacts();
   public function getContactById($id);
 	public function getContactsByCreatorId($creatorId);
   public function addContact(DomainObject\Contact $contact);

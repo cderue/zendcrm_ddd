@@ -55,11 +55,11 @@ class UserRepository implements Repository\IUserRepository
 	/**
 	 * Sélectionner tous les utilisateurs
 	 */
-  /*public function getUsers()
+  public function getUsers()
 	{
 		$query = new Mongo\QueryObject($this->_context);
 		return $query->select('Application\Domain\Object\User');
-	}*/
+	}
 	
 	/**
 	 * Sélectionner un utilisateur par son identifiant
@@ -72,14 +72,15 @@ class UserRepository implements Repository\IUserRepository
 	}
 	
 	/**
-	 * Sélectionne un utilisateur par l'identifiant
-	 * de son propriétaire
+	 * Sélectionne un utilisateur par son identifiant de connexion
+	 * et son mot de passe
 	 */
-	public function getUsersByCreatorId($creatorId)
+	public function getUserByLoginAndPassword($login, $password)
 	{
-		$query = new \Mongo\QueryObject($this->_context);
-		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
-								 ->select('Application\Domain\Object\User');
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new Mongo\SimpleCriteria('_login', '==', $login))
+								 ->addCriteria(new Mongo\SimpleCriteria('_password_hash', '==', $password))
+								 ->first('Application\Domain\Object\User');
 	}
 	
 	/**

@@ -56,12 +56,13 @@ class LeadRepository implements Repository\ILeadRepository
 	/**
 	 * Sélectionner tous les prospects
 	 */
+	/*
   public function getLeads()
 	{
 		$query = new Mongo\QueryObject($this->_context);
 		
 		return $query->select('Application\Domain\Object\Lead');
-	}
+	}*/
 	
 	/**
 	 * Sélectionner un prospect par son identifiant
@@ -79,8 +80,8 @@ class LeadRepository implements Repository\ILeadRepository
 	 */
 	public function getLeadsByCreatorId($creatorId)
 	{
-		$query = new \Mongo\QueryObject($this->_context);
-		return $query->addCriteria(new SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
+		$query = new Mongo\QueryObject($this->_context);
+		return $query->addCriteria(new Mongo\SimpleCriteria(array('_creator' => '_id'), '==', $creatorId))
 								 ->select('Application\Domain\Object\Lead');
 	}
 	

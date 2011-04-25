@@ -78,14 +78,14 @@ class LeadApplicationService implements ILeadApplicationService
 	/**
 	 * Sélectionner tous les prospects
 	 */
-  public function getLeads()
+  /*public function getLeads()
 	{
 		try {	
 			return $this->_repository->getLeads();
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
-	}
+	}*/
 	
 	/**
 	 * Sélectionner un prospect par son identifiant
@@ -106,7 +106,7 @@ class LeadApplicationService implements ILeadApplicationService
 	public function getLeadsByCreatorId($creatorId)
 	{
 		try {	
-			return $this->_repository->getLeadByOwnerId($ownerId);
+			return $this->_repository->getLeadsByCreatorId($creatorId);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}

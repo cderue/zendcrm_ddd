@@ -53,7 +53,7 @@ class Bootstrap extends \Zend\Application\Bootstrap
   /**
    * Initialiser la base de données MongoDB
    */   
-  protected function _initDb()
+  /*protected function _initDb()
   {
     // Charge le fichier de configuration
     $config = new \Zend\Config\Config($this->getOptions());
@@ -61,7 +61,7 @@ class Bootstrap extends \Zend\Application\Bootstrap
     $mongo = $config->mongo->params;
     // Stocke les paramètres de connexion dans le registre
     \Zend\Registry::set('mongo', $mongo);
-  }
+  }*/
   
   /**
    * Initialiser les plugins du contrôleur frontal
@@ -71,7 +71,7 @@ class Bootstrap extends \Zend\Application\Bootstrap
     // Récupère l'instance du contrôleur frontal  
     $front = \Zend\Controller\Front::getInstance();
     // Enregistre le plugin d'authentification auprès du contrôleur frontal
-    //$front->registerPlugin(new \Application\Plugin\Authentication(), 1);
+    $front->registerPlugin(new \Application\Plugin\Authentication(), 1);
     //
 		$broker = $front->getHelperBroker();
     $broker->register('LeadHelper', new \Application\Plugin\LeadHelper());
@@ -87,20 +87,5 @@ class Bootstrap extends \Zend\Application\Bootstrap
     $options['backend'] = $config->cache->backEnd;
     $options['backendOptions']['lifetime'] = $config->cache->backEndOptions->lifetime;
     $front->registerPlugin(new Application\Plugin\Cache($options), 10);*/
-  }
-  
-  /**
-   * Initialiser le routage des requêtes REST
-   */
-  protected function _initRestRoute()
-  {
-    $this->bootstrap('frontController');
-    $frontController = \Zend\Controller\Front::getInstance();
-    //$restRoute = new \Zend\Rest\Route($frontController);
-		// Specifying the "api" module as RESTful, and the "task" controller of the
-		// "backlog" module as RESTful:
-		$restRoute = new \Zend\Rest\Route($frontController, array(), array('application' => array('lead-rest')));
-//$router->addRoute('rest', $restRoute);
-    $frontController->getRouter()->addRoute('rest', $restRoute);
   }
 }

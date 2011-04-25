@@ -45,38 +45,42 @@ class Persister
    * Tableau de mapping entre les entités du modèle 
    * et les collections de la base de données
    */
-  protected $_map = null;
+  protected $_dom = null;
   
   /**
    * Contructeur
    */
-  public function __construct(Connection $connection)
+  public function __construct($xml, Connection $connection)
   {
     $this->_driver = new Driver($connection);
-  	$this->_map = array(
+  	var_dump(file_get_contents($xml));
+  
+  	$this->_dom = new \Zend\Dom\Query(file_get_contents($xml));/*(
       'Application\Domain\Object\User'        => 'users',
       'Application\Domain\Object\Lead'        => 'leads',
       'Application\Domain\Object\Contact'     => 'contacts',
       'Application\Domain\Object\Account'     => 'accounts',
       'Application\Domain\Object\Opportunity' => 'opportunities'
-    );
+    );*/
   }
   
+  /**
+   * Obtenir le pilote
+   */
   public function getDriver()
   {
   	return $this->_driver;
   }
   
   /**
-   * 
+   * Sélectionner toutes les entités répondant aux critères
    */
   public function findMany($entityClassName, array $criteria)
   {
-    //
-    $collection = $this->_map[$entityClassName];  
-    
+    $collection = $this->_dom->queryXpath("/mapping/entity[@name='$entityClassName']");  
     $cursor = $this->_driver->findMany($collection, $criteria);
     $result = iterator_to_array($cursor);
+    
     $entities = array();
     foreach ($result as $document) {
       $entity = new $entityClassName();
@@ -88,15 +92,18 @@ class Persister
   }
   
   /**
-   * 
+   * Sélectionner la première entité répondant aux critères
    */
   public function findOne($entityClassName , array $criteria)
   {
-    if (!array_key_exists($entityClassName, $this->_map)) {
+    /*if (!array_key_exists($entityClassName, $this->_map)) {
       throw new \Exception('Invalid entity class');
-    }
+    }*/
+  	$domElement = $this->_dom->queryXpath("//entity[@name='$entityClassName']")->current();
+  	$collection = $domElement->getAttribute('collection');
+  	var_dump($this->_dom);
     
-    $collection = $this->_map[$entityClassName];
+    //$collection = $this->_map[$entityClassName];
     $result = $this->_driver->findOne($collection, $criteria);
     if (0 == count($result)) {
       return false;
@@ -141,16 +148,26 @@ class Persister
   }
   
   /**
-   * 
+   * Convertir un document en entité
+   * @param array $document
+   * @param string $entity
    */
   private function _toEntity(array $document, $entity)
   {
-    $document['id'] = $document['_id']->__toString();
+    $reflection = new \ReflectionClass($entity);
+    $properties = $reflection->getProperties();
+    $className = get_class($entity);
+    $fields = $this->_dom->queryXpath("/mapping/entity[@name='$className']/field");
+    $references = $this->_dom->queryXpath("/mapping/entity[@name='$className']/reference");
+    foreach ($properties as $prop) {
+    	
+    }
+  	$document['id'] = $document['_id']->__toString();
     unset($document['_id']);
     foreach ($document as $field) {
     	if (is_array($field) && array_key_exists('$id', $field) && array_key_exists('$ref', $field)) {
     		$collection = $this->_map[get_class($entity)];
-    		$field = $this->_driver->$collection->getDBRef($field);
+    		$field = $this->_driver->getDBRef($collection, $field);
     	} else if (is_array($field)) {
     		//$this->_toEntity($field, $entity);
     	} else {

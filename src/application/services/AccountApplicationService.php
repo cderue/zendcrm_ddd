@@ -61,14 +61,14 @@ class AccountApplicationService implements IAccountApplicationService
 	/**
 	 * Sélectionner tous les comptes clients 
 	 */
-	public function getAccounts()
+	/*public function getAccounts()
 	{
 		try {	
 			return $this->_repository->getAccounts();
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}
-	}
+	}*/
 	
 	/**
 	 * Sélectionner un compte client par son identifiant
@@ -89,7 +89,7 @@ class AccountApplicationService implements IAccountApplicationService
 	public function getAccountsByCreatorId($creatorId)
 	{
 		try {	
-			return $this->_repository->getAccountByCreatorId($creatorId);
+			return $this->_repository->getAccountsByCreatorId($creatorId);
 		} catch (\Exception $ex) {
 			// Zend_Log
 		}

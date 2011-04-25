@@ -70,7 +70,9 @@ class LeadController extends \Zend\Controller\Action
    */
   public function listAction()
   {
-		$leads = $this->_service->getLeads();   
+		$auth = new \Zend\Authentication\AuthenticationService();
+		$identity = $auth->getIdentity();
+  	$leads = $this->_service->getLeadsByCreatorId($identity->getId());   
     $this->view->leads = $leads;
   }
     
