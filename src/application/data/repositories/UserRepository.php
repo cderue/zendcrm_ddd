@@ -78,8 +78,8 @@ class UserRepository implements Repository\IUserRepository
 	public function getUserByLoginAndPassword($login, $password)
 	{
 		$query = new Mongo\QueryObject($this->_context);
-		return $query->addCriteria(new Mongo\SimpleCriteria('_login', '==', $login))
-								 ->addCriteria(new Mongo\SimpleCriteria('_password_hash', '==', $password))
+		return $query->addCriteria(new Mongo\SimpleCriteria('login', '==', $login))
+								 ->addCriteria(new Mongo\SimpleCriteria('password_hash', '==', $password))
 								 ->first('Application\Domain\Object\User');
 	}
 	

@@ -74,7 +74,7 @@ class UserController extends \Zend\Controller\Action
     if ($auth->hasIdentity()) {
       $this->_forward('list', 'lead');
     } else if ($this->_request->isPost()) {
-      $result = $this->_service->authenticate($_POST['login'], $_POST['password']);
+      $result = $this->_service->authenticate($_POST['login'], md5($_POST['password']));
       if ($result->isValid()) {
       	$this->_forward('list', 'lead');
       }

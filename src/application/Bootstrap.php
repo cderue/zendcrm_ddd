@@ -72,6 +72,7 @@ class Bootstrap extends \Zend\Application\Bootstrap
     $front = \Zend\Controller\Front::getInstance();
     // Enregistre le plugin d'authentification auprès du contrôleur frontal
     $front->registerPlugin(new \Application\Plugin\Authentication(), 1);
+    $front->registerPlugin(new \Application\Plugin\Authorization(), 2);
     //
 		$broker = $front->getHelperBroker();
     $broker->register('LeadHelper', new \Application\Plugin\LeadHelper());

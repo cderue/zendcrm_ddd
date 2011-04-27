@@ -40,7 +40,12 @@ class User extends AbstractPerson
   /** Constantes */
   const STD = 'STD';
   const ADM = 'ADM';
-
+  const LEAD = 'LEAD';
+  const CONTACT = 'CONTACT';
+  const ACCOUNT = 'ACCOUNT';
+  const OPPORTUNITY = 'OPPORTUNITY';
+  const USER = 'USER';
+	
   /**
    * Login
    * @var string
@@ -65,7 +70,41 @@ class User extends AbstractPerson
    * Rôle administrateur ou standard
    * @var boolean
    */
-  //protected $_isAdmin;
+  protected $_acl = null;
+  
+  protected $_resources = array(
+  	self::LEAD, 
+  	self::CONTACT, 
+  	self::ACCOUNT, 
+  	self::OPPORTUNITY, 
+  	self::USER);
+  
+  public function __construct(array $options = null)
+  {
+  	parent::__construct($options);
+  	
+  	$this->_acl = new \Zend\Acl\Acl();
+  	
+  	$standard = new \Zend\Acl\Role\GenericRole('standard');
+		$this->_acl->addRole($standard)
+    		 ->addRole(new \Zend\Acl\Role\GenericRole('admin'), $standard);
+    	
+    $lead = new \Zend\Acl\Resource\GenericResource(self::LEAD);
+    $contact = new \Zend\Acl\Resource\GenericResource(self::CONTACT);
+    $account = new \Zend\Acl\Resource\GenericResource(self::ACCOUNT);
+    $opportunity = new \Zend\Acl\Resource\GenericResource(self::OPPORTUNITY);
+    $user = new \Zend\Acl\Resource\GenericResource(self::USER);
+    
+    $this->_acl->addResource($lead)
+    					 ->addResource($contact)
+    					 ->addResource($account)
+    					 ->addResource($opportunity)
+    					 ->addResource($user);
+    
+    $this->_acl->deny();
+    $this->_acl->allow('standard', array($lead, $contact, $account, $opportunity))
+    					 ->allow('admin', $user);
+  }
 
   /**
    * Affecter le login
@@ -144,22 +183,17 @@ class User extends AbstractPerson
     return $this->_isActive;
   }
   
-  /**
-   * Vérifier si le login existe déjà
-   * @param array $logins
-   * @throws \Exception
-   */
-  public function checkIfLoginExists(array $logins)
+  public function isAllowed($resource)
   {
-  	if (empty($this->_login)) {
-  		throw new \Exception('Invalid login');
+  	if (!in_array($resource, $this->_resources)) {
+  		return false;
   	}
   	
-  	if (!in_array($this->_login, $logins)) {
-  		return true;
+  	if (!$this->_isActive) {
+  		return false;
   	}
   	
-  	return false;
-  	
+  	$role = (self::ADM === $this->_role)?'admin':'standard';
+  	return $this->_acl->isAllowed($role, $resource);
   }
 }

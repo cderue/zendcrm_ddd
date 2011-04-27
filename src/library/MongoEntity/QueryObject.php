@@ -58,7 +58,7 @@ class QueryObject
 	 * 
 	 * Enter description here ...
 	 */
-	private function getFilterExpression(array $expression)
+	private function getFilterExpression()
 	{
 		$implode = array();
 		
@@ -71,6 +71,8 @@ class QueryObject
     	$js .= '; }';
     	
     	$expression = array('$where' => $js);
+    	
+    	return $expression;
 		}
 	}
 	
@@ -79,13 +81,8 @@ class QueryObject
 	 */
 	public function select($entityClassName)
 	{
-		$expression = array();
-		$this->getFilterExpression($expression);
+		$expression = $this->getFilterExpression();
 		$entities = $this->_context->getMapper()->findMany($entityClassName, $expression);
-		
-		/*foreach ($entities as $entity) {
-			$this->_context->attachEntity($entity);
-		} */
 		
 		return $entities;
 	}
@@ -95,10 +92,8 @@ class QueryObject
 	 */
 	public function first($entityClassName)
 	{
-		$expression = array();
-		$this->getFilterExpression($expression);
+		$expression = $this->getFilterExpression();
 		$entity = $this->_context->getMapper()->findOne($entityClassName, $expression); 
-		//$this->_context->attachEntity($entity);
 		
 		return $entity;
 	}

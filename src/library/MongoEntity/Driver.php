@@ -81,8 +81,8 @@ class Driver
 
   public function findOne($collection, array $criteria, array $fields = array())
   {
-      $result = $this->getConnection()->$collection->findOne($criteria, $fields);;
-      return $result;
+  	$result = $this->getConnection()->$collection->findOne($criteria, $fields);
+    return $result;
   }
   
   public function getDBRef($collection, array $dbRef)
