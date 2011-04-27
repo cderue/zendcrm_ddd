@@ -48,13 +48,13 @@ try {
 		'password_hash' => md5('admin'),
 		'role' 					=> 'ADM',
 		'is_active' 		=> true,
-		'creator' 			=> null 
+		'creator' 			=> 'admin' 
 	);
 	
 	// Sauvegarde l'administrateur
 	$db->users->insert($admin);
-	$admin = $db->users->findOne(array('login' => 'admin'));
-	$adminRef = $db->users->createDBRef($admin);
+	//$admin = $db->users->findOne(array('login' => 'admin'));
+	//$adminRef = $db->users->createDBRef($admin);
 	
 	// Crée un utilisateur normal
 	$user = array(
@@ -65,13 +65,13 @@ try {
 		'password_hash' => md5('cderue'),
 		'role' 					=> 'STD',
 		'is_active' 		=> true,
-		'creator' 			=> $adminRef
+		'creator' 			=> 'admin'
 	);
 	
 	// Sauvegarde l'utilisateur normal
 	$db->users->insert($user);
-	$user = $db->users->findOne(array('login' => 'cderue'));
-	$userRef = $db->users->createDBRef($user);
+	//$user = $db->users->findOne(array('login' => 'cderue'));
+	//$userRef = $db->users->createDBRef($user);
 	
 	// Crée un compte client
 	$account = array(
@@ -82,7 +82,7 @@ try {
 			'city' => 'Lyon',
 			'country' => 'France'
 		),
-		'creator' => $userRef
+		'creator' => 'cderue'
 	);
 	
 	// Sauvegarde le compte client
@@ -97,9 +97,9 @@ try {
 		'lastname' 		=> 'Durdan',
 		'email' 			=> 'caroline.durdan@pharmacie-gv.com',
 		'account' 		=> 'Pharmacie du Grand Vallon',
-		'phoneOffice' => '0418228990',
+		'phone_office' => '0418228990',
 		'status' 			=> '1',
-		'creator' 		=> $userRef
+		'creator' 		=> 'cderue'
 	);
 	
 	// Crée un autre prospect
@@ -110,7 +110,7 @@ try {
 		'account'			 => 'IT Services',
 		'phone_office' => '0116278001',
 		'status' 			 => '1',
-		'creator' 		 => $userRef
+		'creator' 		 => 'cderue'
 	);
 	
 	// Sauvegarde les deux prospects
@@ -125,7 +125,7 @@ try {
 		'job_title' 	 => 'Directeur',
 		'email' 			 => 'bernard.conte@itservices.com',
 		'phone_office' => '0116278004',
-		'creator' 		 => $userRef
+		'creator' 		 => 'cderue'
 	);
 	
 	// Sauvegarde le contact
@@ -142,7 +142,7 @@ try {
 		'amount' => 200000,
 		'date_closed' => '28/11/2011',
 		'contact' => $contactRef,
-		'creator' => $userRef
+		'creator' => 'cderue'
 	);
 	
 	// Sauvegarde l'opportunité

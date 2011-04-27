@@ -112,9 +112,11 @@ class UserApplicationService implements IUserApplicationService
       } else {
 				$result = new Authentication\Result(Authentication\Result::FAILURE, null);
 			}
+			
 			return $result;
 		} catch (\Exception $ex) {
 			// Zend_Log
+			throw $ex;
 		}
 	}
 	

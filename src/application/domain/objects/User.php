@@ -143,24 +143,6 @@ class User extends AbstractPerson
   {
     return $this->_isActive;
   }
-
-  /**
-   * Affecter le rôle
-   * @param boolean $isAdmin
-   */
-  /*public function setIsAdmin($isAdmin)
-  {
-    $this->_isAdmin = $isAdmin;
-    return $this;
-  }*/
-
-  /**
-    * Obtenir le rôle
-    */
-  /*public function getIsAdmin()
-  {
-    return $this->_isAdmin;
-  }*/
   
   /**
    * Vérifier si le login existe déjà

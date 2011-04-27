@@ -72,7 +72,6 @@ class UserController extends \Zend\Controller\Action
   {
     $auth = new \Zend\Authentication\AuthenticationService();
     if ($auth->hasIdentity()) {
-    	//$this->view->broker('layout')->getLayout()->enableLayout();
       $this->_forward('list', 'lead');
     } else if ($this->_request->isPost()) {
       $result = $this->_service->authenticate($_POST['login'], $_POST['password']);

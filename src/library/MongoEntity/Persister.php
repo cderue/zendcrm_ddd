@@ -53,15 +53,7 @@ class Persister
   public function __construct($xml, Connection $connection)
   {
     $this->_driver = new Driver($connection);
-  	var_dump(file_get_contents($xml));
-  
-  	$this->_dom = new \Zend\Dom\Query(file_get_contents($xml));/*(
-      'Application\Domain\Object\User'        => 'users',
-      'Application\Domain\Object\Lead'        => 'leads',
-      'Application\Domain\Object\Contact'     => 'contacts',
-      'Application\Domain\Object\Account'     => 'accounts',
-      'Application\Domain\Object\Opportunity' => 'opportunities'
-    );*/
+  	$this->_dom = simplexml_load_file($xml);
   }
   
   /**
@@ -77,7 +69,8 @@ class Persister
    */
   public function findMany($entityClassName, array $criteria)
   {
-    $collection = $this->_dom->queryXpath("/mapping/entity[@name='$entityClassName']");  
+    $domElement = $this->_dom->xpath("//entity[@name='$entityClassName']/@collection");
+    $collection = (string) $domElement[0]->collection; 
     $cursor = $this->_driver->findMany($collection, $criteria);
     $result = iterator_to_array($cursor);
     
@@ -99,11 +92,8 @@ class Persister
     /*if (!array_key_exists($entityClassName, $this->_map)) {
       throw new \Exception('Invalid entity class');
     }*/
-  	$domElement = $this->_dom->queryXpath("//entity[@name='$entityClassName']")->current();
-  	$collection = $domElement->getAttribute('collection');
-  	var_dump($this->_dom);
-    
-    //$collection = $this->_map[$entityClassName];
+  	$domElement = $this->_dom->xpath("//entity[@name='$entityClassName']/@collection");
+    $collection = (string) $domElement[0]->collection;
     $result = $this->_driver->findOne($collection, $criteria);
     if (0 == count($result)) {
       return false;
@@ -154,27 +144,58 @@ class Persister
    */
   private function _toEntity(array $document, $entity)
   {
-    $reflection = new \ReflectionClass($entity);
-    $properties = $reflection->getProperties();
+    $reflection = new \ReflectionObject($entity);
     $className = get_class($entity);
-    $fields = $this->_dom->queryXpath("/mapping/entity[@name='$className']/field");
-    $references = $this->_dom->queryXpath("/mapping/entity[@name='$className']/reference");
-    foreach ($properties as $prop) {
-    	
+    $fields = $this->_dom->xpath("/mapping/entity[@name='$className']/field");
+    $references = $this->_dom->xpath("/mapping/entity[@name='$className']/reference");
+    $embedded = $this->_dom->xpath("/mapping/entity[@name='$className']/embedded");
+    
+  	foreach ($fields as $f) {
+  		$attr = $f->attributes();
+  		$property = (string) $attr['property'];
+  		$name = (string) $attr['name'];
+  		$prop = $reflection->getProperty($property);
+  		if ($prop) {
+    		$prop->setAccessible(true);
+    		if (isset($document[$name])) {
+    			$prop->setValue($entity, $document[$name]);
+    		}
+  		}	else {
+  			throw new \Exception('Invalid property');
+  		} 
     }
-  	$document['id'] = $document['_id']->__toString();
-    unset($document['_id']);
-    foreach ($document as $field) {
-    	if (is_array($field) && array_key_exists('$id', $field) && array_key_exists('$ref', $field)) {
-    		$collection = $this->_map[get_class($entity)];
-    		$field = $this->_driver->getDBRef($collection, $field);
-    	} else if (is_array($field)) {
-    		//$this->_toEntity($field, $entity);
+    
+  	foreach ($references as $r) {
+  		$attr = $r->attributes();
+    	$property = (string) $attr['property'];
+  		$name = (string) $attr['name'];
+  		$type = (string) $attr['type'];
+    	$collection = (string) $attr['collection'];
+    
+  		$prop = $reflection->getProperty($property);
+    	$prop->setAccessible(true);
+    	if ($prop && isset($document[$name])) {
+    		$field = $this->_driver->getDBRef($collection, $document[$name]);
+    		$reference = $this->_toEntity($field, new $type());
+    		$prop->setValue($entity, $reference);
     	} else {
+    		throw new \Exception('Invalid property');
     	}
     }
-    $entity->setOptions($document);
-
+    
+    foreach ($embedded as $e) {
+    	$attr = $e->attributes();
+    	$property = (string) $attr['property'];
+  		$name = (string) $attr['name'];
+  		$type = (string) $attr['type'];
+  		
+  		$prop = $reflection->getProperty($property);
+    	$prop->setAccessible(true);
+    	if ($prop && isset($document[$name])) {
+    		$prop->setValue($entity, $this->_toEntity($document[$name], new $type()));
+    	}
+    }
+  
     return $entity;
   }
 }

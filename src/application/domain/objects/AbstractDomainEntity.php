@@ -160,7 +160,7 @@ abstract class AbstractDomainEntity implements IValidator
 	 */
 	public function setCreator($creator)
 	{	
-		if (null !== $creator
+		/*if (null !== $creator
       && !$creator instanceof User
       && !is_array($creator)) {
       throw new \Exception('Invalid user type');
@@ -171,7 +171,8 @@ abstract class AbstractDomainEntity implements IValidator
     }
     if (is_array($creator)) {
       $this->_creator = new User($creator);
-    }
+    }*/
+		$this->_creator = (string) $creator;
     return $this;
 	}
 	

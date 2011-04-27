@@ -78,7 +78,7 @@ class Address implements IValidator
 	 * @param string $zipCode
 	 * @param string $country
 	 */
-  public function __construct($street, $city, $state, $zipCode, $country)
+  public function __construct($street = '', $city = '', $state = '', $zipCode = '', $country = '')
   {
     $this->_street = (string) $street;
     $this->_city = (string) $city;

@@ -52,7 +52,7 @@ class EntityContext implements IUnitOfWork
   {
     //$this->_config = $config;
     
-    $this->_mapper = new Persister('../application/configs/mapping.xml', $connection);
+    $this->_mapper = new Persister('../library/MongoEntity/mapping.xml', $connection);
   }
   
   public function getMapper()

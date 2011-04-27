@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<entity name="Application\Domain\Object\User" collection="users">
+  	<field name="_id" property="_id" id="true" />
+    <field name="firstname" property="_firstname" />
+    <field name="lastname" property="_lastname" />
+    <field name="email" property="_email" />
+    <field name="phone_office" property="_phoneOffice" />
+    <field name="phone_mobile" property="_phoneMobile" />
+    <field name="phone_fax" property="_phoneFax" />
+    <field name="login" property="_login" />
+    <field name="password_hash" property="_passwordHash" />
+    <field name="role" property="_role" />
+    <field name="is_active" property="_isActive" />
+    <field name="creator" property="_creator" />
+    <field name="creation_date" property="_creationDate" />
+	</entity>
+	<entity name="Application\Domain\Object\Contact" collection="contacts">
+		<field name="id" property="_id" id="true" />
+		<field name="firstname" property="_firstname" />
+    <field name="lastname" property="_lastname" />
+    <reference name="account" property="_account" type="Application\Domain\Object\Account" collection="accounts" />
+    <field name="job_title" property="_jobTitle" />
+    <field name="department" property="_department" />
+    <field name="email" property="_email" />
+    <field name="phone_office" property="_phoneOffice" />
+    <field name="phone_mobile" property="_phoneMobile" />
+    <field name="phone_fax" property="_phoneFax" />
+    <embedded name="address" property="_address" type="Application\Domain\Object\Address" />
+    <field name="creator" property="_creator" />
+    <field name="creation_date" property="_creationDate" />
+	</entity>
+	<entity name="Application\Domain\Object\Lead" collection="leads">
+		<field name="_id" property="_id" id="true" />
+		<field name="firstname" property="_firstname" />
+    <field name="lastname" property="_lastname" />
+    <field name="account" property="_account" />
+    <field name="job_title" property="_jobTitle" />
+    <field name="department" property="_department" />
+    <field name="email" property="_email" />
+    <field name="phone_office" property="_phoneOffice" />
+    <field name="phone_mobile" property="_phoneMobile" />
+    <field name="phone_fax" property="_phoneFax" />
+    <embedded name="address" property="_address" type="Application\Domain\Object\Address" />
+    <field name="status" property="_status" />
+    <field name="creator" property="_creator" />
+    <field name="creation_date" property="_creationDate" />
+	</entity>
+	<entity name="Application\Domain\Object\Account" collection="accounts">
+		<field name="_id" property="_id" id="true" />
+		<field name="name" property="_name" />
+    <field name="phone_office" property="_phoneOffice" />
+    <field name="phone_fax" property="_phoneFax" />
+    <embedded name="address" property="_address" type="Application\Domain\Object\Address" />
+		<field name="creator" property="_creator" />
+    <field name="creation_date" property="_creationDate" />
+	</entity>
+	<entity name="Application\Domain\Object\Opportunity" collection="opportunities">
+		<field name="_id" property="_id"  id="true" />
+		<field name="name" property="_name" />
+		<reference name="account" property="_account" type="Application\Domain\Object\Account" collection="accounts" />
+		<field name="amount" property="_amount" />
+		<field name="date_closed" property="_dateClosed" />
+		<field name="probability" property="_probability" />
+		<field name="status" property="_status" />
+		<reference name="contact" property="_contact" type="Application\Domain\Object\Contact" collection="contacts" />
+		<field name="creator" property="_creator" />
+    <field name="creation_date" property="_creationDate" />
+	</entity>
+	<entity name="Application\Domain\Object\Address">
+		<field name="street" property="_street" />
+		<field name="city" property="_city" />
+		<field name="state" property="_state" />
+		<field name="zip_code" property="_zipCode" />
+		<field name="country" property="_country" />
+	</entity>
+</mapping>
